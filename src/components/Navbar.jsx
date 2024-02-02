@@ -11,6 +11,8 @@ import {
   MenuButton,
   Show,
   Button,
+  Text,
+  Box,
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import { Link as ReactRouterLink } from "react-router-dom"
@@ -50,9 +52,13 @@ export default function Navbar() {
         align="center"
         justify="space-between"
       >
-        <Hide below="sm">
-          <Logo size="120" radius="0" />
-        </Hide>
+        <Box display="flex" alignItems="center">
+          <Hide below="sm">
+            <Logo size="12" radius="0" />
+          </Hide>
+          <Text p="1em">Magic Kitchen</Text>
+        </Box>
+
         <Show below="sm">
           <HamburgerMenu></HamburgerMenu>
         </Show>
