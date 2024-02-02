@@ -18,6 +18,39 @@ import { HamburgerIcon } from "@chakra-ui/icons"
 import { Link as ReactRouterLink } from "react-router-dom"
 import Logo from "./Logo"
 
+const routes = [
+  {
+    key: 0,
+    name: "Home",
+    path: "/",
+  },
+  {
+    key: 1,
+    name: "Search for Recipes",
+    path: "/",
+  },
+  {
+    key: 2,
+    name: "Submit a Recipe",
+    path: "/",
+  },
+  {
+    key: 3,
+    name: "Kitchen Tips",
+    path: "/",
+  },
+  {
+    key: 4,
+    name: "Recipe Blog",
+    path: "/",
+  },
+  {
+    key: 5,
+    name: "My Profile",
+    path: "/",
+  },
+]
+
 export function HamburgerMenu() {
   return (
     <Menu>
@@ -26,15 +59,11 @@ export function HamburgerMenu() {
       </MenuButton>
       <Portal>
         <MenuList>
-          <MenuItem as={ReactRouterLink} to="/">
-            Home
-          </MenuItem>
-          <MenuItem as={ReactRouterLink} to="/">
-            Search for Recipes
-          </MenuItem>
-          <MenuItem as={ReactRouterLink} to="/">
-            Kitchen Tips
-          </MenuItem>
+          {routes.map((route) => (
+            <MenuItem key={route.id} as={ReactRouterLink} to={route.path}>
+              {route.name}
+            </MenuItem>
+          ))}
         </MenuList>
       </Portal>
     </Menu>
@@ -64,21 +93,13 @@ export default function Navbar() {
         </Show>
         <Hide below="sm">
           <Breadcrumb p="1em">
-            <BreadcrumbItem>
-              <BreadcrumbLink as={ReactRouterLink} to="/">
-                Home
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink as={ReactRouterLink} to="/">
-                Search for Recipes
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink as={ReactRouterLink} to="/">
-                Kitchen Tips
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+            {routes.map((route) => (
+              <BreadcrumbItem key={route.id}>
+                <BreadcrumbLink as={ReactRouterLink} to={route.path}>
+                  {route.name}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            ))}
           </Breadcrumb>
         </Hide>
       </Flex>
