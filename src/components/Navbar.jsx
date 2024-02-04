@@ -26,12 +26,12 @@ const routes = [
   },
   {
     key: 1,
-    name: "Search for Recipes",
+    name: "Search Recipes",
     path: "/",
   },
   {
     key: 2,
-    name: "Submit a Recipe",
+    name: "Submit Recipe",
     path: "/",
   },
   {
@@ -40,13 +40,8 @@ const routes = [
     path: "/",
   },
   {
-    key: 4,
-    name: "Recipe Blog",
-    path: "/",
-  },
-  {
     key: 5,
-    name: "My Profile",
+    name: "Account",
     path: "/",
   },
 ]
@@ -88,10 +83,10 @@ export default function Navbar() {
           <Text p="1em">Magic Kitchen</Text>
         </Box>
 
-        <Show below="sm">
+        <Show below="md">
           <HamburgerMenu></HamburgerMenu>
         </Show>
-        <Hide below="sm">
+        <Hide below="md">
           <Breadcrumb p="1em">
             {routes.map((route) => (
               <BreadcrumbItem key={route.id}>
