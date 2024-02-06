@@ -15,7 +15,7 @@ import {
   Box,
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
-import { Link as ReactRouterLink } from "react-router-dom"
+import { NavLink as ReactRouterLink } from "react-router-dom"
 import Logo from "./Logo"
 
 const routes = [
@@ -27,22 +27,22 @@ const routes = [
   {
     key: 1,
     name: "Search Recipes",
-    path: "/",
+    path: "/search",
   },
   {
     key: 2,
     name: "Submit Recipe",
-    path: "/",
+    path: "/new-recipe",
   },
   {
     key: 3,
     name: "Kitchen Tips",
-    path: "/",
+    path: "/tips",
   },
   {
     key: 5,
     name: "Account",
-    path: "/",
+    path: "/account",
   },
 ]
 
@@ -55,7 +55,12 @@ export function HamburgerMenu() {
       <Portal>
         <MenuList>
           {routes.map((route) => (
-            <MenuItem key={route.id} as={ReactRouterLink} to={route.path}>
+            <MenuItem
+              key={route.id}
+              as={ReactRouterLink}
+              to={route.path}
+              _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+            >
               {route.name}
             </MenuItem>
           ))}
@@ -90,8 +95,12 @@ export default function Navbar() {
           <Breadcrumb p="1em">
             {routes.map((route) => (
               <BreadcrumbItem key={route.id}>
-                <BreadcrumbLink as={ReactRouterLink} to={route.path}>
-                  {route.name}
+                <BreadcrumbLink
+                  as={ReactRouterLink}
+                  to={route.path}
+                  _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+                >
+                  <Text>{route.name}</Text>
                 </BreadcrumbLink>
               </BreadcrumbItem>
             ))}
