@@ -16,7 +16,8 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import { NavLink as ReactRouterLink } from "react-router-dom"
-import Logo from "./Logo"
+import { MkIcon } from "./Logo"
+import { SignupModal } from "./SignupModal"
 
 const routes = [
   {
@@ -71,6 +72,7 @@ export function HamburgerMenu() {
 }
 
 export default function Navbar() {
+  const logged = false
   return (
     <>
       <Flex
@@ -83,14 +85,13 @@ export default function Navbar() {
       >
         <Box display="flex" alignItems="center">
           <Hide below="sm">
-            <Logo size="12" radius="0" />
+            <MkIcon size="12" radius="0" />
           </Hide>
-          <Text p="1em">Magic Kitchen</Text>
+          <Hide below="md">
+            <Text p="1em">Magic Kitchen</Text>
+          </Hide>
         </Box>
 
-        <Show below="md">
-          <HamburgerMenu></HamburgerMenu>
-        </Show>
         <Hide below="md">
           <Breadcrumb p="1em">
             {routes.map((route) => (
@@ -106,6 +107,14 @@ export default function Navbar() {
             ))}
           </Breadcrumb>
         </Hide>
+        {!logged && (
+          <Box>
+            <SignupModal />
+          </Box>
+        )}
+        <Show below="md">
+          <HamburgerMenu />
+        </Show>
       </Flex>
     </>
   )
