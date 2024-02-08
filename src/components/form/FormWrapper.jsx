@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Heading,
-  Input,
-} from "@chakra-ui/react"
+import { Box, Button, Heading } from "@chakra-ui/react"
 import PropTypes from "prop-types"
 
 FormWrapper.propTypes = {

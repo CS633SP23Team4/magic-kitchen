@@ -1,8 +1,5 @@
 import logo from "./logo.svg"
 import "./App.css"
-import CustomRecipe from "./components/form/RecipeForm"
-import ProfileForm from "./components/form/ProfileForm"
-import { FormWrapper } from "./components/form/FormWrapper"
 
 function App() {
   return (
@@ -21,9 +18,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <FormWrapper header="Submit a Custom Recipe">
-        <ProfileForm />
-      </FormWrapper>
     </div>
   )
 }
