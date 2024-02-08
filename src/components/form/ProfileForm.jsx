@@ -33,10 +33,6 @@ export default function ProfileForm() {
     const [nameFirst, setNameFirst] = useState("")
     const [nameLast, setNameLast] = useState("")
     const [bio, setBio] = useState("")
-    const [storeImage, setStoreImage] = useState([])
-    const saveImage = (img) => {
-        setStoreImage(img)
-    }
     return (
         <>
             <FormControl>

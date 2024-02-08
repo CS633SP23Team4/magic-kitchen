@@ -4,18 +4,14 @@ import {
   FormLabel,
   FormHelperText,
   Input,
-  Button,
   Flex,
-  Box,
-  Heading,
   Stack,
   InputGroup,
   Textarea,
   Text,
 } from "@chakra-ui/react"
-import { DeleteIcon } from "@chakra-ui/icons"
 import PropTypes from "prop-types"
-import { PrimaryButton, TertiaryButton, DeleteButton, SecondaryButton } from "./CustomButton"
+import { DeleteButton, SecondaryButton } from "./CustomButton"
 
 IngredientGroup.propTypes = {
   id: PropTypes.string,
@@ -95,11 +91,16 @@ export default function CustomRecipe() {
   }
 
   return (
-    <div>
+    <>
       <FormControl isRequired>
         <FormLabel fontSize={24}>Name</FormLabel>
         <Input bg="gray.50" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
         <FormHelperText>Enter the name of this recipe.</FormHelperText>
+      </FormControl>
+      <FormControl my={6} isRequired>
+        <FormLabel fontSize={24}>Est Time</FormLabel>
+        <Input bg="gray.50" type="text" value={time} onChange={(e) => setTime(e.target.value)} />
+        <FormHelperText>Estimated cooking time in minutes</FormHelperText>
       </FormControl>
       <FormControl my={6} isRequired>
         <Flex py={2} align={"center"}>
@@ -129,13 +130,9 @@ export default function CustomRecipe() {
           ))}
         </Stack>
       </FormControl>
-      <FormControl my={6} isRequired>
-        <FormLabel fontSize={24}>Est Time</FormLabel>
-        <Input bg="gray.50" type="text" value={time} onChange={(e) => setTime(e.target.value)} />
-        <FormHelperText>Estimated cooking time</FormHelperText>
-      </FormControl>
+
       <FormControl my={6}>
-        <FormLabel fontSize={24}>Ktichenware Needed</FormLabel>
+        <FormLabel fontSize={24}>Kitchenware Needed</FormLabel>
         <Input
           bg="gray.50"
           type="text"
@@ -149,6 +146,6 @@ export default function CustomRecipe() {
         <Input bg="gray.50" type="text" value={tips} onChange={(e) => setTips(e.target.value)} />
         <FormHelperText>Any common mistakes or tips</FormHelperText>
       </FormControl>
-    </div>
+    </>
   )
 }
