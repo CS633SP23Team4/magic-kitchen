@@ -21,7 +21,6 @@ export function FormWrapper({ children, header }) {
         base: "6",
         md: "24",
       }}
-      bg="#f0f9fa"
       align="center"
       justifyContent="center"
     >
