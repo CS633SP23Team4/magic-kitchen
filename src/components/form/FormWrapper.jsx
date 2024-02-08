@@ -16,7 +16,15 @@ FormWrapper.propTypes = {
 
 export function FormWrapper({ children, header }) {
   return (
-    <Box px={24} bg="#f0f9fa" align="center" justifyContent="center">
+    <Box
+      px={{
+        base: "6",
+        md: "24",
+      }}
+      bg="#f0f9fa"
+      align="center"
+      justifyContent="center"
+    >
       <Box p={2}>
         <Box textAlign="center">
           <Heading>{header}</Heading>
