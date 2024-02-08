@@ -14,7 +14,7 @@ export const FaqItem = (props) => {
       <AccordionItem>
         <h2>
           <AccordionButton>
-            <Box as="span" flex="1" textAlign="left">
+            <Box as="span" flex="1" textAlign="left" pr={2}>
               {props.question}
             </Box>
             <AccordionIcon />
