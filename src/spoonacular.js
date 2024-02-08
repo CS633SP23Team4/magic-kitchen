@@ -21,6 +21,7 @@ export const searchByIngredient = (ingredients) => {
       console.error(error)
     } else {
       console.log("API called successfully. Returned data: " + data)
+      return data
     }
   })
 }
