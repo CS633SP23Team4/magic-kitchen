@@ -1,5 +1,6 @@
-import { Box, Button, Heading } from "@chakra-ui/react"
+import { Box, Heading } from "@chakra-ui/react"
 import PropTypes from "prop-types"
+import { PrimaryButton } from "./CustomButton"
 
 FormWrapper.propTypes = {
   header: PropTypes.string,
@@ -23,9 +24,14 @@ export function FormWrapper({ children, header }) {
         <Box my={4} textAlign="left">
           <form>
             {children}
-            <Button bg="brand.900" color="gray.50" width="full" mt={4} type="submit">
-              Submit
-            </Button>
+            <PrimaryButton
+              bg="brand.900"
+              color="gray.50"
+              width="full"
+              mt={4}
+              type="submit"
+              text="Submit"
+            />
           </form>
         </Box>
       </Box>

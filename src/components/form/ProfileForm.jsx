@@ -6,11 +6,13 @@ import {
     Avatar,
     InputGroup,
     Textarea,
-    Flex, AvatarBadge, Button,
+    Flex,
+    AvatarBadge
 } from "@chakra-ui/react"
-import {NotAllowedIcon, EditIcon} from "@chakra-ui/icons";
+import {NotAllowedIcon} from "@chakra-ui/icons";
 import Select, {components, OptionProps} from "react-select"
 import {DietOption, DietOptions} from "../../data/diet.ts"
+import {EditButton} from "./CustomButton";
 
 const Option = (props: OptionProps<DietOption>) => {
     return (
@@ -24,7 +26,7 @@ const Option = (props: OptionProps<DietOption>) => {
             }}
         >
             <NotAllowedIcon color='red.500'/>
-            <components.Option {...props} />
+            <components.Option {...props}/>
         </div>
     );
 };
@@ -39,7 +41,7 @@ export default function ProfileForm() {
                 <FormLabel fontSize={24}>Avatar</FormLabel>
                 <Flex justify="center">
                     <Avatar size="2xl" name="Christian Nwamba" src="https://bit.ly/code-beast">{" "}
-                        <AvatarBadge as={Button} boxSize='3em'><EditIcon/></AvatarBadge>
+                        <AvatarBadge border="0" boxSize="1em"><EditButton/></AvatarBadge>
                     </Avatar>
                 </Flex>
             </FormControl>

@@ -1,5 +1,5 @@
-import { DeleteIcon } from "@chakra-ui/icons"
-import { Button } from "@chakra-ui/react"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+import { Button, IconButton } from "@chakra-ui/react"
 import PropTypes from "prop-types"
 
 PrimaryButton.propTypes = {
@@ -9,7 +9,14 @@ PrimaryButton.propTypes = {
 
 export function PrimaryButton(props) {
   return (
-    <Button colorScheme="blue" ml={6} onClick={props.clickFunction}>
+    <Button
+      isRound={true}
+      bg="brand.900"
+      color="gray.50"
+      width="12em"
+      mt={4}
+      onClick={props.clickFunction}
+    >
       {props.text}
     </Button>
   )
@@ -22,7 +29,7 @@ SecondaryButton.propTypes = {
 
 export function SecondaryButton(props) {
   return (
-    <Button border="1px" borderColor="gray.200" ml={6} onClick={props.clickFunction}>
+    <Button isRound={true} border="1px" borderColor="gray.200" ml={6} onClick={props.clickFunction}>
       {props.text}
     </Button>
   )
@@ -47,14 +54,30 @@ DeleteButton.propTypes = {
 
 export function DeleteButton(props) {
   return (
-    <Button
+    <IconButton
+      variant="solid"
       colorScheme="red"
-      border="1px"
-      borderColor="gray.200"
-      size="xs"
+      aria-label="Delete"
+      fontSize="20px"
+      icon={<DeleteIcon />}
       onClick={props.deleteFunction}
-    >
-      <DeleteIcon boxSize={3} />
-    </Button>
+    />
+  )
+}
+
+EditButton.propTypes = {
+  editFunction: PropTypes.func,
+}
+
+export function EditButton(props) {
+  return (
+    <IconButton
+      isRound={true}
+      variant="solid"
+      aria-label="Edit"
+      fontSize="20px"
+      icon={<EditIcon />}
+      onClick={props.editFunction}
+    />
   )
 }
