@@ -1,13 +1,13 @@
 import React from 'react';
-import Navbar from "./Navbar";
 import { Heading } from '@chakra-ui/react';
+import Navbar from "./Navbar";
 
 const Header = () => {
   return (
-    <header className="header">
+    <header className="App-header">
         <Navbar />
         <Heading as="h1" size="lg" fontWeight="bold">
-          My Website
+          Magic Kitchen
         </Heading>
     </header>
   );

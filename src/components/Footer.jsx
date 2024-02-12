@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Flex, Link, Stack } from '@chakra-ui/react';
+import { Box, Text, Link, Stack } from '@chakra-ui/react';
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text>&copy; 2024 BU MET 633 Team 4</Text>
+        <Text>&copy; 2024 BU MET 633 Team 4, MIT Licence</Text>
         <Stack direction="row" spacing={4}>
           <Link href="https://github.com/CS633SP23Team4/magic-kitchen" target="_blank">
             View on GitHub
