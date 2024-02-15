@@ -1,4 +1,5 @@
 import Navbar from "./Navbar"
+import BlogList from "./BlogList"
 
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
       <header className="App-header">
         <Navbar />
       </header>
+      < BlogList />
     </div>
   )
 }
