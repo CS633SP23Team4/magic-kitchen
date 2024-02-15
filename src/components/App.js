@@ -1,10 +1,11 @@
 import Layout from "./Layout"
+import BlogList from "./BlogList"
 
 function App() {
   return (
     <div className="App">
         <Layout>
-            <h1>This is a place holder. </h1>
+          < BlogList />
         </Layout>
     </div>
   )
