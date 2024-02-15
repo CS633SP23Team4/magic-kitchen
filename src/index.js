@@ -1,9 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import "./index.css"
-import App from "./App"
 import reportWebVitals from "./reportWebVitals"
+import Home from "./routes/home"
 
 const colors = {
   brand: {
@@ -13,12 +14,44 @@ const colors = {
   },
 }
 
-const theme = extendTheme({ colors })
+const breakpoints = {
+  base: "0px",
+  sm: "445px",
+  md: "968px",
+  lg: "1000px",
+  xl: "1200px",
+  "2xl": "1536px",
+}
+
+const theme = extendTheme({ breakpoints, colors })
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/search",
+    element: <Home />,
+  },
+  {
+    path: "/new-recipe",
+    element: <Home />,
+  },
+  {
+    path: "/tips",
+    element: <Home />,
+  },
+  {
+    path: "/account",
+    element: <Home />,
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <ChakraProvider theme={theme}>
-    <App />
+    <RouterProvider router={router} />
   </ChakraProvider>
 )
 
