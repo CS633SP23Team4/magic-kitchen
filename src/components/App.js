@@ -1,11 +1,11 @@
-import Navbar from "./Navbar"
+import Layout from "./Layout"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Navbar />
-      </header>
+        <Layout>
+            <h1>This is a place holder. </h1>
+        </Layout>
     </div>
   )
 }
