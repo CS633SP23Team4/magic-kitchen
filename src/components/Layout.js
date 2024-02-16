@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Container } from "@chakra-ui/react"
 import Header from './Header';
 import Footer from './Footer';
 
@@ -12,7 +13,9 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
+      <Container as="main" h="100vh" minHeight="100vh" alignItems="center" justifyContent="center">
       {children}
+      </Container>
       <Footer />
     </>
   );
