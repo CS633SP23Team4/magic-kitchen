@@ -5,21 +5,16 @@ import {
   Heading,
   Stack,
   Divider,
-  ButtonGroup,
   Text,
   Image,
-  IconButton,
   HStack,
   Link,
   AspectRatio,
   Icon,
 } from "@chakra-ui/react"
 import PropTypes from "prop-types"
-import { StarIcon, TimeIcon } from "@chakra-ui/icons"
-import DinnerIcon from "../icons/dinnerplate.svg"
-import HeartIcon from "../icons/Heart.svg"
+import { TimeIcon } from "@chakra-ui/icons"
 import { ChefIcon, PlateIcon } from "../icons/Icons"
-
 import { Rating } from "./Rating"
 
 BlogCard.propTypes = {
@@ -27,9 +22,9 @@ BlogCard.propTypes = {
   bookmarks: PropTypes.number,
   title: PropTypes.string,
   description: PropTypes.string,
-  imgLink: PropTypes.string,
-  imgAlt: PropTypes.string,
   link: PropTypes.string,
+  alt: PropTypes.string,
+  image: PropTypes.string,
 }
 
 export function BlogCard(props) {
@@ -41,9 +36,9 @@ export function BlogCard(props) {
             objectFit="cover"
             maxH="200px"
             maxW="100%"
-            src={props.imgLink}
+            src={props.image}
             fallbackSrc="https://thecrites.com/sites/all/modules/cookbook/theme/images/default-recipe-big.png"
-            alt={props.imgAlt}
+            alt={props.alt}
             borderRadius="lg"
           />
         </AspectRatio>
@@ -54,17 +49,6 @@ export function BlogCard(props) {
           <Text>{props.description}</Text>
         </Stack>
       </CardBody>
-      <CardFooter>
-        <ButtonGroup
-          spacing="8"
-          display="flex"
-          justifyContent="center"
-          alignContent="center"
-          alignItems="center"
-        >
-          {props.bookmarks ? props.bookmarks : "0"}
-        </ButtonGroup>
-      </CardFooter>
     </Card>
   )
 }
