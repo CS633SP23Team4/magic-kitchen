@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Heading, List, ListItem, Link, Text, Flex, Image, useBreakpointValue } from "@chakra-ui/react"
+import React from 'react';
+import { Box } from "@chakra-ui/react"
 import { BlogOptions } from "../data/blogs.ts"
 import { BlogCard } from "./Card"
 function BlogList() {
-  const fontSize = useBreakpointValue({ base: "md", md: "lg", lg: "xl" });
-
   return (
     <Box my={8} textAlign="center">
       <Box display="grid" gridGap="4" gridTemplateColumns="repeat(auto-fit, minmax(400px, 1fr))">
