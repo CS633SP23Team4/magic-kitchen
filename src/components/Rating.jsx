@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react"
 import { StarIcon } from "@chakra-ui/icons"
-import { PropTypes } from "prop-types"
+import PropTypes from "prop-types"
 
 Rating.propTypes = {
   rating: PropTypes.number,

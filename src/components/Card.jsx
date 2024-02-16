@@ -1,10 +1,7 @@
 import {
-  Box,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Button,
   Heading,
   Stack,
   Divider,
@@ -12,12 +9,17 @@ import {
   Text,
   Image,
   IconButton,
-  Flex,
-  Spacer,
   HStack,
+  Link,
+  AspectRatio,
+  Icon,
 } from "@chakra-ui/react"
-import { InfoIcon, QuestionIcon, StarIcon, TimeIcon, TriangleUpIcon } from "@chakra-ui/icons"
-import { PropTypes } from "prop-types"
+import PropTypes from "prop-types"
+import { StarIcon, TimeIcon } from "@chakra-ui/icons"
+import DinnerIcon from "../icons/dinnerplate.svg"
+import HeartIcon from "../icons/Heart.svg"
+import { ChefIcon, PlateIcon } from "../icons/Icons"
+
 import { Rating } from "./Rating"
 
 BlogCard.propTypes = {
@@ -27,20 +29,28 @@ BlogCard.propTypes = {
   description: PropTypes.string,
   imgLink: PropTypes.string,
   imgAlt: PropTypes.string,
+  link: PropTypes.string,
 }
 
 export function BlogCard(props) {
   return (
     <Card maxW="sm" borderRadius="lg" overflow="hidden">
       <CardBody>
-        <Image
-          src={props.imgLink}
-          fallbackSrc="https://thecrites.com/sites/all/modules/cookbook/theme/images/default-recipe-big.png"
-          alt={props.imgAlt}
-          borderRadius="lg"
-        />
+        <AspectRatio maxW="400px" ratio={4 / 3}>
+          <Image
+            objectFit="cover"
+            maxH="200px"
+            maxW="100%"
+            src={props.imgLink}
+            fallbackSrc="https://thecrites.com/sites/all/modules/cookbook/theme/images/default-recipe-big.png"
+            alt={props.imgAlt}
+            borderRadius="lg"
+          />
+        </AspectRatio>
         <Stack mt="6" spacing="4" textAlign="left">
-          <Heading size="md">{props.title}</Heading>
+          <Heading size="md">
+            <Link href={props.link}>{props.title}</Link>
+          </Heading>
           <Text>{props.description}</Text>
         </Stack>
       </CardBody>
@@ -52,27 +62,6 @@ export function BlogCard(props) {
           alignContent="center"
           alignItems="center"
         >
-          <IconButton
-            isRound={true}
-            variant="solid"
-            colorScheme="gray"
-            aria-label="Like"
-            fontSize="15px"
-            size="sm"
-            mr="1em"
-            icon={<TriangleUpIcon />}
-          />
-          {props.likes ? props.likes : "0"}
-          <IconButton
-            isRound={true}
-            variant="solid"
-            colorScheme="gray"
-            aria-label="Favorite"
-            fontSize="15px"
-            size="sm"
-            mr="1em"
-            icon={<StarIcon />}
-          />
           {props.bookmarks ? props.bookmarks : "0"}
         </ButtonGroup>
       </CardFooter>
@@ -109,12 +98,13 @@ export function RecipeCard(props) {
           <Rating rating={props.rating} reviewCount={props.reviewCount} />
         </CardBody>
         <CardFooter pt="1em">
-          <HStack spacing="24px">
+          <HStack spacing="12px">
             <TimeIcon /> <Text>{props.cookTime} minutes</Text>
             <Divider borderColor="darkgray" orientation="vertical" />
-            <InfoIcon /> <Text>{props.flavor}</Text>
+            <Icon as={PlateIcon} /> <Text>{props.flavor}</Text>
             <Divider borderColor="darkgray" orientation="vertical" />
-            <QuestionIcon /> <Text>{props.difficulty}</Text>
+            <Icon as={ChefIcon} />
+            <Text>{props.difficulty}</Text>
           </HStack>
         </CardFooter>
       </Stack>
