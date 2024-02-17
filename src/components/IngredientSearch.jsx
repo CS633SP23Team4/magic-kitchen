@@ -1,14 +1,21 @@
-import {Button, Flex, FormLabel} from "@chakra-ui/react"
+import PropTypes from "prop-types";
+import {Flex} from "@chakra-ui/react"
 import AsyncSelect from "react-select/async"
+import {Ingredients} from "../data/ingredients.ts"
+import {SecondaryButton} from "./form/CustomButton";
 
-import {Ingredients, IngredientOptions} from "../data/ingredients.ts"
 
-// Only perform the search within the select if >3char
-//
+IngredientSearch.propTypes = {
+    recipeFunction: PropTypes.func,
+    chooseIngredients: PropTypes.func
+}
+
 const options = []
 const MIN_INPUT_LENGTH = 3;
 Ingredients.forEach((ingredient) => {
-    options.push({value: ingredient.ingredientId, label: ingredient.ingredient})
+    let label = ingredient.ingredient.replaceAll('-', ' ')
+    label = label.charAt(0).toUpperCase() + label.slice(1)
+    options.push({value: ingredient.ingredient, label: label})
 })
 const filterColors = (inputValue: string) => {
     if (inputValue.length >= MIN_INPUT_LENGTH) {
@@ -16,11 +23,9 @@ const filterColors = (inputValue: string) => {
             i.label.toLowerCase().includes(inputValue.toLowerCase())
         );
     }
-
 };
 
 const promiseOptions = (inputValue: string) =>
-
     new Promise((resolve) => {
         setTimeout(() => {
 
@@ -33,31 +38,31 @@ const noOptionsMessage = (input) =>
         ? "No options"
         : "Search input must be at least 3 characters";
 
-export function IngredientSearch() {
 
+export function IngredientSearch(props) {
     return (
         <>
-            <Flex wrap="wrap" alignItems="center" justify="center">
-                <AsyncSelect
-                    styles={{
-                        indicatorSeparator: () => ({display: "none"}),
-                        control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? "grey" : "lightpink",
-                            borderRadius: "90px",
-                            minWidth: "28vw",
-                        }),
-                    }}
-                    placeholder="Start typing an ingredient!"
-                    isMulti
-                    cacheOptions
-                    noOptionsMessage={noOptionsMessage}
-                    loadOptions={promiseOptions}
-                />
-                <Button m="1em" w="100px" bg="pink" borderRadius="90px">
-                    Search
-                </Button>
+            <AsyncSelect
+                styles={{
+                    indicatorSeparator: () => ({display: "none"}),
+                    control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: state.isFocused ? "grey" : "lightpink",
+                        borderRadius: "90px",
+                        padding: ".5em"
+                    }),
+                }}
+                placeholder="Start typing an ingredient!"
+                isMulti
+                cacheOptions
+                noOptionsMessage={noOptionsMessage}
+                loadOptions={promiseOptions}
+                onChange={(e) => props.chooseIngredients(e)}
+            />
+            <Flex justify="center" pt={2}>
+                <SecondaryButton clickFunction={props.recipeFunction} text="Search"/>
             </Flex>
+
         </>
     )
 }
