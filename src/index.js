@@ -5,6 +5,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import "./index.css"
 import reportWebVitals from "./reportWebVitals"
 import Home from "./routes/home"
+import CreateRecipe from "./routes/createRecipe"
 
 const colors = {
   brand: {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/new-recipe",
-    element: <Home />,
+    element: <CreateRecipe />,
   },
   {
     path: "/tips",
