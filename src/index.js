@@ -4,13 +4,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import "./index.css"
 import reportWebVitals from "./reportWebVitals"
+
 import Home from "./routes/home"
+
+import "@fontsource/aladin"
 
 const colors = {
   brand: {
     900: "#042433",
     800: "#76A1BC",
     700: "#D6E7E4",
+  },
+  fonts: {
+    logo: `Aladin`,
   },
 }
 
