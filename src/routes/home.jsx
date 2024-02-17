@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Box } from "@chakra-ui/react"
 import { IngredientSearch } from "../components/IngredientSearch"
+import Layout from "../components/Layout"
 
 export default function Home() {
   const [ingredients, setIngredients] = useState([])
@@ -27,13 +28,13 @@ export default function Home() {
   }
 
   return (
-    <>
+    <Layout>
       <Box p={6}>
         <IngredientSearch
           recipeFunction={() => getRecipes(ingredients)}
           chooseIngredients={chooseIngredients}
         ></IngredientSearch>
       </Box>
-    </>
+    </Layout>
   )
 }
