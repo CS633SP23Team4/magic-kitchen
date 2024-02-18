@@ -32,7 +32,7 @@ export const TipsData: readonly Tips[] = [
         id: "2",
         title: "91 Kitchen Tricks and Tips From Our Expert Cooks",
         content:
-            "Our experts from the Real Simple test kitchen compiled simplifying strategies, tips, and techniques to make your time in the kitchen more efficient, your food taste better, and (dare we say?) cooking more fun[^1^][1].",
+            "Our experts from the Real Simple test kitchen compiled simplifying strategies, tips, and techniques to make your time in the kitchen more efficient, your food taste better, and (dare we say?) cooking more fun.",
         alt: "Kitchen utensils",
         link: "https://www.realsimple.com/food-recipes/cooking-tips-techniques/kitchen-tips-techniques",
         image_url: "https://www.realsimple.com/thmb/2BeYvu3AjuesIiuR4HILPRmlPMM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/pan-oil-food-ictcrop_300-bc28c2bd4ab04ff9b43fd912ccbf5284.jpg",

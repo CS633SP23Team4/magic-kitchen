@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Heading} from "@chakra-ui/react"
+import { Box, Grid, Heading } from "@chakra-ui/react"
 import {TipsData} from "../data/tips.ts"
 import { BlogCard } from "../components/Card"
 import Layout from "../components/Layout";
@@ -10,7 +10,7 @@ function TipsList() {
         <Layout>
             <Box my={8} textAlign="center">
               <Heading margin="5vh">Tips</Heading>
-                <Box display="grid" gridGap="4" gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))">
+                <Grid gridGap="4" templateColumns="repeat(auto-fit, minmax(300px, 1fr))" justifyItems="center" >
                     {TipsData.map((tip) => (
                         <BlogCard // Use BlogCard component
                             key={tip.id}
@@ -21,7 +21,7 @@ function TipsList() {
                             description={tip.content}
                         />
                     ))}
-                </Box>
+                </Grid>
               <Heading margin="5vh">Frequently Asked Questions</Heading>
               <FaqSection items={FaqOptions} />
             </Box>
