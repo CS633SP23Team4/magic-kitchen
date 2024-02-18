@@ -1,4 +1,4 @@
-import { Accordion, Grid, SimpleGrid } from "@chakra-ui/react"
+import { Accordion, SimpleGrid } from "@chakra-ui/react"
 import PropTypes from "prop-types"
 import { FaqItem } from "./FaqItem"
 
