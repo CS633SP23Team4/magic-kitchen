@@ -11,8 +11,8 @@ export function PrimaryButton(props) {
   return (
     <Button
       isRound={true}
-      bg="brand.900"
-      color="gray.50"
+      bg="brand.prussianBlue"
+      color="brand.azureLight"
       width="12em"
       mt={4}
       onClick={props.clickFunction}
@@ -32,8 +32,8 @@ export function SecondaryButton(props) {
     <Button
       isround={"true"}
       border="1px"
-      borderColor="gray.200"
-      bg={"lightpink"}
+      borderColor="brand.cadet"
+      bg="brand.azureLight"
       ml={6}
       onClick={props.clickFunction}
     >
@@ -49,7 +49,7 @@ TertiaryButton.propTypes = {
 
 export function TertiaryButton(props) {
   return (
-    <Button border="1px" borderColor="gray.200" ml={6} onClick={props.clickFunction}>
+    <Button border="1px" borderColor="brand.cadetGrey" ml={6} onClick={props.clickFunction}>
       {props.text}
     </Button>
   )
@@ -81,6 +81,8 @@ export function EditButton(props) {
     <IconButton
       isRound={true}
       variant="solid"
+      bg="brand.cadet"
+      color="brand.prussianBlue"
       aria-label="Edit"
       fontSize="20px"
       icon={<EditIcon />}
