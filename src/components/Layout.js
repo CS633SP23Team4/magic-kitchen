@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <Container as="main" h="100vh" minHeight="100vh" alignItems="center" justifyContent="center">
+      <Container as="main" minHeight="100vh" alignItems="center" justifyContent="center" maxW="80vw">
       {children}
       </Container>
       <Footer />
