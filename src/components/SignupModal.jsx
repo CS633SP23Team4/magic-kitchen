@@ -7,12 +7,9 @@ import {
   ModalBody,
   ModalCloseButton,
   ButtonGroup,
-  Text,
   Button,
   useDisclosure,
   Input,
-  Flex,
-  Box,
   FormControl,
   FormLabel,
 } from "@chakra-ui/react"
@@ -24,31 +21,28 @@ import {
   auth,
   logInWithEmailAndPassword,
   signInWithGoogle,
+  logout
 } from '../firebaseInit';
 
 export function SignupModal() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  //const auth = getAuth(app);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  //const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
+
   const SignIn = async () => {
     const user = await signInWithGoogle()
     setUser(user.email)
     console.log(user)
-  } 
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     // maybe trigger a loading screen
-  //     return;
-  //   }
-  //   if (user) navigate('/');
-  // }, [user, loading, navigate]);
+    if (user) {
+      //{onClose}
+      navigate('/');
+      window.location.reload();
+    }
+  }
   
-  return (
+  return(
     <>
       <Button onClick={onOpen}>Sign in / Sign Up</Button>
 
@@ -92,7 +86,6 @@ export function SignupModal() {
                   Register
                 </Button>
               </ButtonGroup>
-            {user}
 
           </ModalFooter>
         </ModalContent>
