@@ -1,11 +1,22 @@
 import Layout from "./Layout"
+import { Filter } from "./Filters"
 
 function App() {
+  const times = [
+    {
+      value: "15",
+      label: "0-15 minutes",
+    },
+    {
+      value: "30",
+      label: "15-30 minutes",
+    },
+  ]
   return (
     <div className="App">
-        <Layout>
-            <h1>This is a place holder. </h1>
-        </Layout>
+      <Layout>
+        <Filter title="Cooking Time" options={times} />
+      </Layout>
     </div>
   )
 }
