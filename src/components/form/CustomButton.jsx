@@ -29,7 +29,14 @@ SecondaryButton.propTypes = {
 
 export function SecondaryButton(props) {
   return (
-    <Button isRound={true} border="1px" borderColor="gray.200" ml={6} onClick={props.clickFunction}>
+    <Button
+      isround={"true"}
+      border="1px"
+      borderColor="gray.200"
+      bg={"lightpink"}
+      ml={6}
+      onClick={props.clickFunction}
+    >
       {props.text}
     </Button>
   )
