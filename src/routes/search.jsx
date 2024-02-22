@@ -40,8 +40,8 @@ export default function Search() {
 
   return (
     <Layout>
-      <Grid templateColumns={{ sm: "repeat(1, 1fr)", lg: "repeat(5, 1fr)" }} gap={8}>
-        <GridItem py={12}>
+      <Grid templateColumns={{ sm: "repeat(1, 1fr)", lg: "repeat(5, 1fr)" }} gap={{ lg: 8 }}>
+        <GridItem py={12} colSpan={{ sm: 4, lg: 1 }}>
           {filterOptions.map((filter, index) => (
             <Filter
               key={index}
@@ -52,7 +52,7 @@ export default function Search() {
           ))}
         </GridItem>
 
-        <GridItem py={12} colSpan={4}>
+        <GridItem py={{ lg: 12 }} colSpan={4}>
           <Box mb={6} p={2} bg="white">
             <IngredientSearch />
           </Box>
