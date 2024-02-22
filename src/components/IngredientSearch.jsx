@@ -81,7 +81,7 @@ export function IngredientSearch() {
         recipesFromIngredients.forEach(recipe => recipeIds.push(recipe.id))
 
         const recipeInformation = await getBulkRecipeInformation(recipeIds.join(",+"))
-        console.log(recipeInformation)
+
         navigate("/search", {state: {recipes: recipeInformation}})
     }
 
