@@ -66,7 +66,13 @@ RecipeCard.propTypes = {
 
 export function RecipeCard(props) {
   return (
-    <Card direction={{ base: "column", sm: "row" }} overflow="hidden" variant="outline">
+    <Card
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+      my={2}
+      shadow="md"
+    >
       <Image
         objectFit="cover"
         maxW={{ base: "100%", sm: "200px" }}

@@ -20,7 +20,7 @@ Filter.propTypes = {
 export function Filter(props) {
   const [value, setValue] = useState("0")
   return (
-    <Box shadow="md">
+    <Box shadow="md" bg="white" mb={4}>
       <Accordion allowToggle>
         <AccordionItem>
           <h2>

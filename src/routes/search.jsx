@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import { Box } from "@chakra-ui/react"
+import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react"
 import { IngredientSearch } from "../components/IngredientSearch"
 import Layout from "../components/Layout"
 import { Filter } from "../components/Filters"
@@ -8,7 +8,10 @@ import { DietOptions } from "../data/diet.ts"
 
 export default function Search() {
   const data = useLocation()
-  const recipes = data.state.recipes
+  let recipes
+  if (data.state) {
+    recipes = data.state.recipes
+  }
 
   const navigate = useNavigate() // react hook for sending data between pages
 
@@ -30,29 +33,38 @@ export default function Search() {
 
   return (
     <Layout>
-      {filterOptions.map((filter, index) => (
-        <Filter key={index} title={filter.title} options={filter.options} />
-      ))}
+      <Grid templateColumns={{ sm: "repeat(1, 1fr)", lg: "repeat(5, 1fr)" }} gap={8}>
+        <GridItem py={12}>
+          {filterOptions.map((filter, index) => (
+            <Filter key={index} title={filter.title} options={filter.options} />
+          ))}
+        </GridItem>
 
-      <Box py={12}>
-        <IngredientSearch />
-        {recipes.map(
-          (recipe) =>
-            recipe.suspiciousDataScore < 60 && (
-              <RecipeCard
-                key={recipe.id}
-                title={recipe.title}
-                cookTime={recipe.readyInMinutes}
-                rating={recipe.spoonacularScore}
-                reviewCount={recipe.aggregateLikes}
-                imgAlt={""}
-                imgLink={recipe.image}
-                difficulty={""}
-                flavor={""}
-              />
-            )
-        )}
-      </Box>
+        <GridItem py={12} colSpan={4}>
+          <Box mb={6} p={2} bg="white">
+            <IngredientSearch />
+          </Box>
+          <Box>
+            {recipes &&
+              recipes.map(
+                (recipe) =>
+                  recipe.suspiciousDataScore < 60 && (
+                    <RecipeCard
+                      key={recipe.id}
+                      title={recipe.title}
+                      cookTime={recipe.readyInMinutes}
+                      rating={recipe.spoonacularScore}
+                      reviewCount={recipe.aggregateLikes}
+                      imgAlt={""}
+                      imgLink={recipe.image}
+                      difficulty={""}
+                      flavor={""}
+                    />
+                  )
+              )}
+          </Box>
+        </GridItem>
+      </Grid>
     </Layout>
   )
 }
