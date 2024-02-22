@@ -1,11 +1,10 @@
 import { useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { Box, Grid, GridItem } from "@chakra-ui/react"
 import { IngredientSearch } from "../components/IngredientSearch"
 import Layout from "../components/Layout"
 import { Filter } from "../components/Filters"
 import { RecipeCard } from "../components/Card"
-import { DietOptions } from "../data/diet.ts"
-import { useEffect, useState } from "react"
 
 const filterOptions = [
   {
