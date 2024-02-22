@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom"
-import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react"
+import { useLocation } from "react-router-dom"
+import { Box, Grid, GridItem } from "@chakra-ui/react"
 import { IngredientSearch } from "../components/IngredientSearch"
 import Layout from "../components/Layout"
 import { Filter } from "../components/Filters"
@@ -12,8 +12,6 @@ export default function Search() {
   if (data.state) {
     recipes = data.state.recipes
   }
-
-  const navigate = useNavigate() // react hook for sending data between pages
 
   const filterOptions = [
     {
@@ -55,10 +53,9 @@ export default function Search() {
                       cookTime={recipe.readyInMinutes}
                       rating={recipe.spoonacularScore}
                       reviewCount={recipe.aggregateLikes}
-                      imgAlt={""}
                       imgLink={recipe.image}
-                      difficulty={""}
-                      flavor={""}
+                      link={recipe.spoonacularSourceUrl}
+                      extendedIngredients={recipe.extendedIngredients}
                     />
                   )
               )}

@@ -13,8 +13,8 @@ import {
   Icon,
 } from "@chakra-ui/react"
 import PropTypes from "prop-types"
-import { TimeIcon } from "@chakra-ui/icons"
-import { ChefIcon, PlateIcon } from "../icons/Icons"
+import { ExternalLinkIcon, TimeIcon } from "@chakra-ui/icons"
+import { PlateIcon } from "../icons/Icons"
 import { Rating } from "./Rating"
 
 BlogCard.propTypes = {
@@ -58,13 +58,16 @@ RecipeCard.propTypes = {
   reviewCount: PropTypes.number,
   title: PropTypes.string,
   imgLink: PropTypes.string,
-  imgAlt: PropTypes.string,
+  link: PropTypes.string,
   cookTime: PropTypes.number,
-  flavor: PropTypes.string,
-  difficulty: PropTypes.string,
+  extendedIngredients: PropTypes.array,
 }
 
 export function RecipeCard(props) {
+  const extendedIngredientsArray = props.extendedIngredients
+  const extendedIngredientsNames = []
+  extendedIngredientsArray.forEach((ingredient) => extendedIngredientsNames.push(ingredient.name))
+  const uniqueIngredients = [...new Set(extendedIngredientsNames)]
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -78,24 +81,24 @@ export function RecipeCard(props) {
         maxW={{ base: "100%", sm: "200px" }}
         src={props.imgLink}
         fallbackSrc="https://thecrites.com/sites/all/modules/cookbook/theme/images/default-recipe-big.png"
-        alt={props.imgAlt}
         borderRadius="lg"
       />
       <Stack>
         <CardBody>
           <Heading size="md" pb="1em" textAlign="left">
-            {props.title}
+            <Link href={props.link} isExternal>
+              {props.title}
+              <ExternalLinkIcon mx="4px" mb="8px" boxSize={4} />
+            </Link>
           </Heading>
           <Rating rating={props.rating} reviewCount={props.reviewCount} />
         </CardBody>
         <CardFooter pt="1em">
           <HStack spacing="12px">
-            <TimeIcon /> <Text>{props.cookTime} minutes</Text>
+            <TimeIcon /> <Text>{props.cookTime} min</Text>
             <Divider borderColor="darkgray" orientation="vertical" />
-            <Icon as={PlateIcon} /> <Text>{props.flavor}</Text>
-            <Divider borderColor="darkgray" orientation="vertical" />
-            <Icon as={ChefIcon} />
-            <Text>{props.difficulty}</Text>
+            <Icon as={PlateIcon} />
+            {props.extendedIngredients && <Text>{uniqueIngredients.join(", ")}</Text>}
           </HStack>
         </CardFooter>
       </Stack>
