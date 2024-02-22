@@ -156,6 +156,23 @@ export default function CustomRecipe(props) {
         })
     }
 
+    const handleClick = () => {
+        if (props.setFormData) {
+            props.setFormData({
+                name: title,
+                description: description,
+                intoleranceTags: [],
+                timeEstimate: time,
+                steps: steps,
+                ingredients: ingredients,
+                tips: tips,
+                kitchenware: kitchenware,
+            });
+        } else {
+            console.log("setFormData is not defined"); // Check if setFormData is undefined
+        }
+    };
+
     return (
         <>
             <FormControl isRequired>
@@ -224,16 +241,7 @@ export default function CustomRecipe(props) {
                 mt={4}
                 type="submit"
                 text="Submit"
-                clickFunction={() => props.setFormData({
-                    name: title,
-                    description: description,
-                    intoleranceTags: [],
-                    timeEstimate: time,
-                    steps: steps,
-                    ingredients: ingredients,
-                    tips: tips,
-                    kitchenware: kitchenware,
-                })}
+                clickFunction={handleClick}
             />
         </>
     )
