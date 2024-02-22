@@ -14,7 +14,7 @@ import AsyncSelect from "react-select/async"
 import {StylesConfig} from "react-select";
 import PropTypes from "prop-types"
 import {Ingredients} from "../../data/ingredients.ts"
-import {DeleteButton, SecondaryButton} from "./CustomButton"
+import {DeleteButton, PrimaryButton, SecondaryButton} from "./CustomButton"
 
 
 IngredientGroup.propTypes = {
@@ -88,7 +88,8 @@ function IngredientGroup(props) {
 
     return (
         <InputGroup id={`${props.id}`} p={2}>
-            <AsyncSelect options={Ingredients} onChange={(e) => setItem(e)} cacheOptions
+            <AsyncSelect options={Ingredients} onChange={(e) => setItem(e)}
+                         cacheOptions
                          noOptionsMessage={noOptionsMessage}
                          loadOptions={promiseOptions}
                          placeholder="Start typing an ingredient!"
@@ -118,8 +119,12 @@ function StepsGroup(props) {
     )
 }
 
-export default function CustomRecipe() {
+CustomRecipe.propTypes = {
+    setFormData: PropTypes.func
+}
+export default function CustomRecipe(props) {
     const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
     const [ingredients, setIngredients] = useState([{id: "0", item: "", amount: "0"}])
     const [steps, setSteps] = useState([{id: "0", instructions: ""}])
     const [time, setTime] = useState("")
@@ -157,6 +162,11 @@ export default function CustomRecipe() {
                 <FormLabel fontSize={24}>Name</FormLabel>
                 <Input bg="gray.50" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 <FormHelperText>Enter the name of this recipe.</FormHelperText>
+            </FormControl>
+            <FormControl my={6} isRequired>
+                <FormLabel fontSize={24}>Description</FormLabel>
+                <Input bg="gray.50" type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <FormHelperText>A short summary of this recipe</FormHelperText>
             </FormControl>
             <FormControl my={6} isRequired>
                 <FormLabel fontSize={24}>Est Time</FormLabel>
@@ -207,6 +217,24 @@ export default function CustomRecipe() {
                 <Input bg="gray.50" type="text" value={tips} onChange={(e) => setTips(e.target.value)}/>
                 <FormHelperText>Any common mistakes or tips</FormHelperText>
             </FormControl>
+            <PrimaryButton
+                bg="brand.900"
+                color="gray.50"
+                width="full"
+                mt={4}
+                type="submit"
+                text="Submit"
+                clickFunction={() => props.setFormData({
+                    name: title,
+                    description: description,
+                    intoleranceTags: [],
+                    timeEstimate: time,
+                    steps: steps,
+                    ingredients: ingredients,
+                    tips: tips,
+                    kitchenware: kitchenware,
+                })}
+            />
         </>
     )
 }

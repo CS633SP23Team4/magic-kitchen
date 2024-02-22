@@ -11,23 +11,21 @@ export function CreateNewRecipeForm() {
     timeEstimate: 0,
     steps: [{ number: 1, text: "" }],
     ingredients: [{ id: "0", name: "", amount: 0 }],
+    tips: "",
+    kitchenware: "",
   })
   const [formData, setFormData] = useState(getInitialFormData())
+
+  const handleSetFormData = (items) => {
+    setFormData(items)
+  }
   const handleSubmit = () => {
     console.log(formData)
   }
   return (
     <FormWrapper>
       <form onSubmit={handleSubmit}>
-        <CustomRecipe />
-        <PrimaryButton
-          bg="brand.900"
-          color="gray.50"
-          width="full"
-          mt={4}
-          type="submit"
-          text="Submit"
-        />
+        <CustomRecipe setFormData={handleSetFormData} />
       </form>
     </FormWrapper>
   )
