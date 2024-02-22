@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <Box as="main" minHeight="100vh" mx={40}>
+      <Box as="main" minHeight="100vh" mx={[2, 15, 40]}>
         {children}
       </Box>
       <Footer />
