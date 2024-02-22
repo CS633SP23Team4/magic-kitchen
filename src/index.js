@@ -6,7 +6,8 @@ import "./index.css"
 import reportWebVitals from "./reportWebVitals"
 
 import Home from "./routes/home"
-import Tips from "./routes/tips";
+import Tips from "./routes/tips"
+import CreateRecipe from "./routes/createRecipe"
 
 import "@fontsource/aladin"
 
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/new-recipe",
-    element: <Home />,
+    element: <CreateRecipe />,
   },
   {
     path: "/tips",
