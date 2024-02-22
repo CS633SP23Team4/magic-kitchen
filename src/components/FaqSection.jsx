@@ -1,15 +1,15 @@
-import { Accordion, Grid } from "@chakra-ui/react"
+import { Accordion, SimpleGrid } from "@chakra-ui/react"
 import PropTypes from "prop-types"
 import { FaqItem } from "./FaqItem"
 
 export default function FaqSection(props) {
   return (
     <Accordion allowToggle>
-      <Grid templateColumns="repeat(2, 1fr)">
+      <SimpleGrid columns={{ sm: 1, lg: 2 }}>
         {props.items.map(function (data) {
           return <FaqItem key={data.id} question={data.question} answer={data.answer} />
         })}
-      </Grid>
+      </SimpleGrid>
     </Accordion>
   )
 }
