@@ -6,8 +6,8 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Radio,
-  RadioGroup,
+  Checkbox,
+  CheckboxGroup,
   Stack,
 } from "@chakra-ui/react"
 import { useState } from "react"
@@ -32,20 +32,17 @@ export function Filter(props) {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <RadioGroup onChange={setValue} value={value}>
+            <CheckboxGroup onChange={setValue} value={value}>
               <Stack>
-                <Radio key="0" value="0">
-                  All
-                </Radio>
                 {props.options.map(function (data) {
                   return (
-                    <Radio key={data.value} value={data.value}>
+                    <Checkbox key={data.value} value={data.value}>
                       {data.label}
-                    </Radio>
+                    </Checkbox>
                   )
                 })}
               </Stack>
-            </RadioGroup>
+            </CheckboxGroup>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

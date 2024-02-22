@@ -68,6 +68,7 @@ export function RecipeCard(props) {
   return (
     <Card direction={{ base: "column", sm: "row" }} overflow="hidden" variant="outline">
       <Image
+        objectFit="cover"
         maxW={{ base: "100%", sm: "200px" }}
         src={props.imgLink}
         fallbackSrc="https://thecrites.com/sites/all/modules/cookbook/theme/images/default-recipe-big.png"
