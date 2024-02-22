@@ -71,7 +71,7 @@ const openLoginModal = () => {
       <Modal isOpen={isLoginOpen} onClose={onLoginClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Sign in</ModalHeader>
+          <ModalHeader>Log in</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <FormControl isRequired py="10px">
@@ -101,7 +101,7 @@ const openLoginModal = () => {
 
           <ModalFooter>
             <ButtonGroup variant='solid' spacing='70px' alignItems="center">
-            <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={RegisterUser}>
+            <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={SignIn}>
                 | Google Login
                 </Button>
                 <Button colorScheme="blue" variant="link" onClick={openSignUpModal}>
@@ -157,7 +157,7 @@ const openLoginModal = () => {
 
           <ModalFooter>
             <ButtonGroup variant='solid' spacing='12' alignItems="center" >
-                <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={RegisterUser}>
+                <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={SignIn}>
                 | Google Login
                 </Button>
                 <Button colorScheme="blue" variant="link" onClick={openLoginModal}>
