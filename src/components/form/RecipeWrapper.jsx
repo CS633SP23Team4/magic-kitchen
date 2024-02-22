@@ -1,7 +1,7 @@
-import { PrimaryButton } from "./CustomButton"
+import { useState } from "react"
 import { FormWrapper } from "./FormWrapper"
 import CustomRecipe from "./RecipeForm"
-import { useState } from "react"
+import { pushUserRecipe } from "../../firebaseInit"
 
 export function CreateNewRecipeForm() {
   const getInitialFormData = () => ({
@@ -18,9 +18,11 @@ export function CreateNewRecipeForm() {
 
   const handleSetFormData = (items) => {
     setFormData(items)
+    handleSubmit()
   }
-  const handleSubmit = () => {
-    console.log(formData)
+  const handleSubmit = async () => {
+    const result = await pushUserRecipe("testUser", formData)
+    if (result) console.log("success")
   }
   return (
     <FormWrapper>
