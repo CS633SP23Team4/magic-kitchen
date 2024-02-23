@@ -15,9 +15,12 @@ import {
   Box,
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
+import { getAuth } from "firebase/auth";
 import { NavLink as ReactRouterLink } from "react-router-dom"
 import { MkIcon } from "./Logo"
 import { SignupModal } from "./SignupModal"
+import { SignOutButton } from "./SignOutButton"
+
 
 const routes = [
   {
@@ -71,8 +74,19 @@ export function HamburgerMenu() {
   )
 }
 
+
 export default function Navbar() {
-  const logged = false
+  const auth = getAuth();
+  var logged = null;
+  const user = auth.currentUser;
+  if (user) {
+    logged = true
+  } else {
+    logged = false
+  }
+      
+
+
   return (
     <>
       <Flex
@@ -107,11 +121,19 @@ export default function Navbar() {
             ))}
           </Breadcrumb>
         </Hide>
+
         {!logged && (
           <Box>
             <SignupModal />
           </Box>
         )}
+
+        {logged && (
+          <Box>
+            <SignOutButton />
+          </Box>
+        )}
+
         <Show below="md">
           <HamburgerMenu />
         </Show>
@@ -119,3 +141,5 @@ export default function Navbar() {
     </>
   )
 }
+
+
