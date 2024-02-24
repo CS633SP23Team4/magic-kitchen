@@ -16,12 +16,10 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import { NavLink as ReactRouterLink } from "react-router-dom"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react"
 import { MkIcon } from "./Logo"
 import { SignupModal } from "./SignupModal"
 import { SignOutButton } from "./SignOutButton"
-
-
 
 const routes = [
   {
@@ -75,67 +73,66 @@ export function HamburgerMenu() {
   )
 }
 
-
 export default function Navbar() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState()
 
-  useEffect( () => {
-    setUser(null);
-    console.log("IN useEffect");
-    var loggedInUser = localStorage.getItem('user');
-    console.log('loggedInUser = ', loggedInUser);
+  useEffect(() => {
+    setUser(null)
+    console.log("IN useEffect")
+    var loggedInUser = localStorage.getItem("user")
+    console.log("loggedInUser = ", loggedInUser)
     if (loggedInUser) {
-      setUser(loggedInUser);
-    }else {
-      setUser(null);
+      setUser(loggedInUser)
+    } else {
+      setUser(null)
     }
   })
-      
+
   if (user) {
     return (
       <>
-      <Flex
-        bgColor="brand.900"
-        color="white"
-        fontSize="lg"
-        p="1em"
-        align="center"
-        justify="space-between"
-      >
-        <Box display="flex" alignItems="center">
-          <Hide below="sm">
-            <MkIcon size="12" radius="0" />
-          </Hide>
+        <Flex
+          bgColor="brand.prussianBlue"
+          color="white"
+          fontSize="lg"
+          p="1em"
+          align="center"
+          justify="space-between"
+        >
+          <Box display="flex" alignItems="center">
+            <Hide below="sm">
+              <MkIcon size="12" radius="0" />
+            </Hide>
+            <Hide below="md">
+              <Text p="1em">Magic Kitchen</Text>
+            </Hide>
+          </Box>
+
           <Hide below="md">
-            <Text p="1em">Magic Kitchen</Text>
+            <Breadcrumb p="1em">
+              {routes.map((route) => (
+                <BreadcrumbItem key={route.id}>
+                  <BreadcrumbLink
+                    as={ReactRouterLink}
+                    to={route.path}
+                    _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+                  >
+                    <Text>{route.name}</Text>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              ))}
+            </Breadcrumb>
           </Hide>
-        </Box>
 
-        <Hide below="md">
-          <Breadcrumb p="1em">
-            {routes.map((route) => (
-              <BreadcrumbItem key={route.id}>
-                <BreadcrumbLink
-                  as={ReactRouterLink}
-                  to={route.path}
-                  _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
-                >
-                  <Text>{route.name}</Text>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            ))}
-          </Breadcrumb>
-        </Hide>
+          <Box>
+            <SignOutButton />
+          </Box>
 
-        <Box>
-          <SignOutButton />
-        </Box>
-
-        <Show below="md">
-          <HamburgerMenu />
-        </Show>
-      </Flex>
-    </>
+          <Show below="md">
+            <HamburgerMenu />
+          </Show>
+        </Flex>
+      </>
     )
   }
 
@@ -185,5 +182,3 @@ export default function Navbar() {
     </>
   )
 }
-
-
