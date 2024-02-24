@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import { GoogleAuthProvider } from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -15,7 +15,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig)
 console.log(firebaseConfig)
 //export const auth = getAuth();
-const googleProvider = new GoogleAuthProvider()
+//const googleProvider = new GoogleAuthProvider()
 //
 //
 // export const signInWithGoogle = async () => {

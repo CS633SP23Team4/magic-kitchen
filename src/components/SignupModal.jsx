@@ -25,7 +25,7 @@ export function SignupModal() {
   const [conf_password, setConfPassword] = useState("")
   const [error, setError] = useState("")
   const navigate = useNavigate()
-  const [user, setUser] = useState("")
+  const [user] = useState("")
 
   useEffect(() => {
     //check and see if there is a user that is logged in
