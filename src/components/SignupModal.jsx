@@ -37,6 +37,7 @@ export function SignupModal() {
   const [user, setUser] = useState("");
 
   useEffect( () => {
+    //check and see if there is a user that is logged in
     if (user.uid) {
       localStorage.setItem('user', user.uid);
       navigate('/');
@@ -49,7 +50,6 @@ export function SignupModal() {
       const user = await signInWithGoogle();
       setUser(user.uid);
       if (user) {
-        console.log("USER DETECTED");
         localStorage.setItem('user', user.uid);
         navigate('/');
         window.location.reload();
@@ -114,12 +114,11 @@ export function SignupModal() {
     e.preventDefault()
     if(validateRegisteration()) {
       // Create a new user with email and password using firebase
+      try{
         createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => {
-            console.log(res.user)
-            .catch((err) => alert(err.message))
-          })
-        .catch(err => setError(err.message))
+      } catch (err) {
+        setError(err.message)
+      }
     }
     setEmail('')
     setPassword('')
