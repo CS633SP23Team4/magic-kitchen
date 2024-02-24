@@ -1,15 +1,12 @@
-import PropTypes from "prop-types";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {Flex} from "@chakra-ui/react"
 import AsyncSelect from "react-select/async"
 import {StylesConfig} from "react-select";
+import {getRecipeFromIngredients, getBulkRecipeInformation} from "../spoonacular";
 import {Ingredients} from "../data/ingredients.ts"
 import {SecondaryButton} from "./form/CustomButton";
 
-
-IngredientSearch.propTypes = {
-    recipeFunction: PropTypes.func,
-    chooseIngredients: PropTypes.func
-}
 
 const options = []
 const MIN_INPUT_LENGTH = 3;
@@ -74,7 +71,20 @@ const colourStyles: StylesConfig = {
 };
 
 
-export function IngredientSearch(props) {
+export function IngredientSearch() {
+    const [ingredients, setIngredients] = useState("")
+    const navigate = useNavigate()
+    const findRecipes = async () => {
+        const recipesFromIngredients = await getRecipeFromIngredients(ingredients)
+        // 20 items
+        const recipeIds = []
+        recipesFromIngredients.forEach(recipe => recipeIds.push(recipe.id))
+
+        const recipeInformation = await getBulkRecipeInformation(recipeIds.join(",+"))
+
+        navigate("/search", {state: {recipes: recipeInformation}})
+    }
+
     return (
         <>
             <AsyncSelect
@@ -84,10 +94,10 @@ export function IngredientSearch(props) {
                 cacheOptions
                 noOptionsMessage={noOptionsMessage}
                 loadOptions={promiseOptions}
-                onChange={(e) => props.chooseIngredients(e)}
+                onChange={(e) => setIngredients(e)}
             />
             <Flex justify="center" pt={2}>
-                <SecondaryButton clickFunction={props.recipeFunction} text="Search"/>
+                <SecondaryButton clickFunction={findRecipes} text="Search"/>
             </Flex>
 
         </>
