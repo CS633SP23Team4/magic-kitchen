@@ -142,7 +142,7 @@ export default function Navbar() {
   return (
     <>
       <Flex
-        bgColor="brand.900"
+        bgColor="brand.prussianBlue"
         color="white"
         fontSize="lg"
         p="1em"
