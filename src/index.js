@@ -6,8 +6,8 @@ import "./index.css"
 import reportWebVitals from "./reportWebVitals"
 
 import Home from "./routes/home"
-import Tips from "./routes/tips";
-
+import Tips from "./routes/tips"
+import Search from "./routes/search"
 import "@fontsource/aladin"
 
 /*
@@ -28,7 +28,8 @@ const colors = {
   brand: {
     prussianBlue: "#0A2537ff",
     azure: "#D7E7E5ff",
-    azureLight: "#E8F3F2ff",
+    azureLight: "#f4f6f6",
+    offWhite: "#F4F6F6FF",
     cadet: "#8EACBFff",
     grey: "#AEC2C6ff",
     cadetGrey: "#8F9EA1ff",
@@ -47,7 +48,17 @@ const breakpoints = {
   "2xl": "1536px",
 }
 
-const theme = extendTheme({ breakpoints, colors })
+const theme = extendTheme({
+  breakpoints,
+  colors,
+  styles: {
+    global: () => ({
+      body: {
+        bg: "#F4F6F6FF",
+      },
+    }),
+  },
+})
 
 const router = createBrowserRouter([
   {
@@ -56,7 +67,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/search",
-    element: <Home />,
+    element: <Search />,
   },
   {
     path: "/new-recipe",

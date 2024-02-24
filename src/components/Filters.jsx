@@ -15,12 +15,18 @@ import { useState } from "react"
 Filter.propTypes = {
   options: PropTypes.array,
   title: PropTypes.string,
+  onChangeFunc: PropTypes.func,
 }
 
 export function Filter(props) {
-  const [value, setValue] = useState("0")
+  const [value, setValue] = useState("2880")
+
+  const emitChange = (value) => {
+    setValue(value)
+    props.onChangeFunc(value)
+  }
   return (
-    <Box shadow="md">
+    <Box shadow="md" bg="white" mb={4}>
       <Accordion allowToggle>
         <AccordionItem>
           <h2>
@@ -32,11 +38,8 @@ export function Filter(props) {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <RadioGroup onChange={setValue} value={value}>
+            <RadioGroup onChange={(e) => emitChange(e)} value={value}>
               <Stack>
-                <Radio key="0" value="0">
-                  All
-                </Radio>
                 {props.options.map(function (data) {
                   return (
                     <Radio key={data.value} value={data.value}>
