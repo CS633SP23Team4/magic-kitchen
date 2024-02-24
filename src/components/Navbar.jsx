@@ -22,8 +22,7 @@ import { SignupModal } from "./SignupModal"
 import { SignOutButton } from "./SignOutButton"
 
 
-
-const routes = [
+const routes_isLoggedIn = [
   {
     key: 0,
     name: "Home",
@@ -51,15 +50,69 @@ const routes = [
   },
 ]
 
+const routes_notLoggedIn = [
+  {
+    key: 0,
+    name: "Home",
+    path: "/",
+  },
+  {
+    key: 1,
+    name: "Search Recipes",
+    path: "/search",
+  },
+  {
+    key: 2,
+    name: "Kitchen Tips",
+    path: "/tips",
+  },
+]
+
 export function HamburgerMenu() {
+  const [user, setUser] = useState();
+ 
+  useEffect( () => {
+    setUser(null);
+    var loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      setUser(loggedInUser);
+    }else {
+      setUser(null);
+    }
+  })
+  
+  if (user) {
+    return(
+      <Menu>
+      <MenuButton as={Button}>
+        <HamburgerIcon></HamburgerIcon>
+      </MenuButton>
+      <Portal>
+        <MenuList>
+          {routes_isLoggedIn.map((route) => (
+            <MenuItem
+              key={route.id}
+              as={ReactRouterLink}
+              to={route.path}
+              _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+            >
+              {route.name}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Portal>
+    </Menu>
+    )
+  }
   return (
+
     <Menu>
       <MenuButton as={Button}>
         <HamburgerIcon></HamburgerIcon>
       </MenuButton>
       <Portal>
         <MenuList>
-          {routes.map((route) => (
+          {routes_notLoggedIn.map((route) => (
             <MenuItem
               key={route.id}
               as={ReactRouterLink}
@@ -78,12 +131,10 @@ export function HamburgerMenu() {
 
 export default function Navbar() {
   const [user, setUser] = useState();
-
+ 
   useEffect( () => {
     setUser(null);
-    console.log("IN useEffect");
     var loggedInUser = localStorage.getItem('user');
-    console.log('loggedInUser = ', loggedInUser);
     if (loggedInUser) {
       setUser(loggedInUser);
     }else {
@@ -113,7 +164,7 @@ export default function Navbar() {
 
         <Hide below="md">
           <Breadcrumb p="1em">
-            {routes.map((route) => (
+            {routes_isLoggedIn.map((route) => (
               <BreadcrumbItem key={route.id}>
                 <BreadcrumbLink
                   as={ReactRouterLink}
@@ -160,7 +211,7 @@ export default function Navbar() {
 
         <Hide below="md">
           <Breadcrumb p="1em">
-            {routes.map((route) => (
+            {routes_notLoggedIn.map((route) => (
               <BreadcrumbItem key={route.id}>
                 <BreadcrumbLink
                   as={ReactRouterLink}
