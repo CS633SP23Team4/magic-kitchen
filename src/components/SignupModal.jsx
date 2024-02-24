@@ -45,37 +45,55 @@ export function SignupModal() {
   })
 
   const SignInGoogle = async () => {
-    const user = await signInWithGoogle()
-      setUser(user.uid)
+    try {
+      const user = await signInWithGoogle();
+      setUser(user.uid);
       if (user) {
         console.log("USER DETECTED");
         localStorage.setItem('user', user.uid);
         navigate('/');
         window.location.reload();
       }
-    (err => setError("Firebase Error. Please try again. "))
-  }
-
-  const SignIn = e => {
-    e.preventDefault();
-    if (!email) {
-      setError("Email cannot be blank!")
-    } else if (!password) {
-      setError("Password cannot be blank!")
-    } else {
-      signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-      setUser(res.user)
-      .catch((err) => alert(err.message))
-      setEmail('')
-      setPassword('')
-    })
-    .catch(err => setError(""))
-    setEmail('');
-    setPassword('');
+    } catch (err) {
+      console.error(err); // Log the error for debugging
+      setError("An error occurred while signing in. Please try again."); // User-friendly error message
     }
-  }
-  
+  };
+
+  const SignIn = async (e) => {
+    e.preventDefault();
+
+    // Input validation
+    const emailError = !email ? "Email cannot be blank!" : null;
+    const passwordError = !password ? "Password cannot be blank!" : null;
+
+    // Clear any existing error message
+    setError("");
+
+    // Display any validation errors immediately
+    if (emailError) {
+      setError(emailError);
+      return;
+    }
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      // Successfully signed in
+      setUser(userCredential.user);
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    } catch (err) {
+      setError(`Authentication failed: ${err.message}`);
+    }
+  };
+
+
   const validateRegisteration = () => {
     let isValid = true;
     if (password !== '' && conf_password !== ''){
