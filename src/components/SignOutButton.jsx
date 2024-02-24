@@ -1,9 +1,8 @@
 import { Button } from "@chakra-ui/react";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebaseInit"
 
 const SignOut = async () => {
-    signOut(auth);
+    console.log("INSIDE SIGNOUT")
+    localStorage.clear();
     window.location.reload();
 }
 

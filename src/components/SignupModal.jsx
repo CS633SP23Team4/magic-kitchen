@@ -13,13 +13,12 @@ import {
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SiGoogle } from "react-icons/si";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
  } from "firebase/auth";
 import {
   auth,
@@ -37,36 +36,48 @@ export function SignupModal() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
 
-  const SignInGoogle = async () => {
-    const user = await signInWithGoogle()
-    setUser(user.email)
-    console.log(user)
-    if (user) {
+  useEffect( () => {
+    if (user.uid) {
+      localStorage.setItem('user', user.uid);
       navigate('/');
       window.location.reload();
     }
-  }
+  })
 
-
-  const SignIn = e => {
-    e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-    .then((res) => {
-      console.log(res.user)
-      .catch((err) => alert(err.message))
-    })
-    .catch(err => setError("INVALID EMAIL OR PASSWORD!"))
-
-    onAuthStateChanged(auth, (user) => {
+  const SignInGoogle = async () => {
+    const user = await signInWithGoogle()
+      setUser(user.uid)
       if (user) {
+        console.log("USER DETECTED");
+        localStorage.setItem('user', user.uid);
         navigate('/');
         window.location.reload();
       }
+    (err => setError("Firebase Error. Please try again. "))
+  }
+
+  const SignIn = e => {
+    e.preventDefault();
+    if (!email) {
+      setError("Email cannot be blank!")
+    } else if (!password) {
+      setError("Password cannot be blank!")
+    } else {
+      signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+      setUser(res.user)
+      .catch((err) => alert(err.message))
+      setEmail('')
+      setPassword('')
     })
+    .catch(err => setError(""))
+    setEmail('');
+    setPassword('');
+    }
   }
   
   const validateRegisteration = () => {
-    let isValid = true
+    let isValid = true;
     if (password !== '' && conf_password !== ''){
       if (password !== conf_password) {
         isValid = false
@@ -75,7 +86,7 @@ export function SignupModal() {
           setError('Invalid Email')
       }
       else {
-        setError('Login Successful')
+        setError('Registeration Successful')
       }
     }
     return isValid
@@ -100,6 +111,7 @@ export function SignupModal() {
   const openSignUpModal = () => {
     onSignUpOpen()
     if (isLoginOpen) {
+      //reset errors to prevent error transfer
       setError('')
       onLoginClose()
     }
@@ -108,6 +120,7 @@ export function SignupModal() {
   const openLoginModal = () => {
     onLoginOpen()
     if (isSignUpOpen) {
+      //reset errors to prevent error transfer
       setError('')
       onSignUpClose()
     }
@@ -143,7 +156,7 @@ export function SignupModal() {
                 autoComplete="current-password"
               />
             </FormControl>
-            <Button w="full" my="2" onClick={SignIn}>
+            <Button w="full" my="2" onClick={SignIn} isDisabled={email === '' || password === ''}>
               Login
             </Button>
           </ModalBody>
