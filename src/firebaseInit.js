@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAmx2m9NxMjIy5Iy94fwZdfKoT44P57t2o",
@@ -11,7 +12,7 @@ const firebaseConfig = {
 }
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
-
+export const db = getFirestore(app)
 export const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
@@ -19,9 +20,20 @@ export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider)
     const user = res.user
+    await addUserFirestore(user)
     return user
   } catch (err) {
     console.error(err)
     throw new Error(err)
+  }
+}
+export const addUserFirestore = async (user) => {
+  // check if user exists; if not, add them to db
+  const userRef = doc(db, "users", user.uid)
+  const userSnap = await getDoc(userRef)
+  if (!userSnap.exists()) {
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+    })
   }
 }
