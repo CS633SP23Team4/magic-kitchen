@@ -23,8 +23,8 @@ export default function Search() {
   if (data.state) {
     recipes = data.state.recipes
   }
-  const [displayedRecipes, setDisplayedRecipes] = useState(recipes)
   const [cookingTimeOption, setCookingTimeOption] = useState("")
+  const [displayedRecipes, setDisplayedRecipes] = useState([])
 
   useEffect(() => {
     let filteredRecipes = recipes
@@ -55,6 +55,7 @@ export default function Search() {
           <Box mb={6} p={2} bg="white">
             <IngredientSearch />
           </Box>
+
           <Box>
             {displayedRecipes.map(
               (recipe) =>
