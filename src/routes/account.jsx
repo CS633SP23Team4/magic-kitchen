@@ -1,9 +1,11 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Box, Button, Flex, Grid, GridItem, Stack, Text } from "@chakra-ui/react"
+import { resetPassword } from "../firebaseInit"
 import Layout from "../components/Layout"
 import ProfileForm from "../components/form/ProfileForm"
 import { FormWrapper } from "../components/form/FormWrapper"
+import CustomRecipe from "../components/form/RecipeForm"
 
 UpdateView.propTypes = {
   value: PropTypes.string,
@@ -14,7 +16,8 @@ function UpdateView(props) {
     case "password":
       return (
         <>
-          <Text>FIREAUTH STUFF</Text>
+          <Text>Reset Password Email</Text>
+          <Button onClick={resetPassword}>Reset</Button>
         </>
       )
     case "preferences":
@@ -23,6 +26,8 @@ function UpdateView(props) {
           <Text>IDK WHAT GOES HERE</Text>
         </FormWrapper>
       )
+    case "create":
+      return <CustomRecipe />
     default:
       return (
         <FormWrapper header="Personal Information">
@@ -46,15 +51,15 @@ export default function Account() {
               </Button>
             </Flex>
             <Flex alignItems="center" my={2}>
-              <Box w="12px" h="12px" bg="darkcyan" m={2} />
-              <Button variant="link" onClick={() => setCurrentView("password")}>
-                Change Password
+              <Box w="12px" h="12px" bg="deeppink" m={2} />
+              <Button variant="link" onClick={() => setCurrentView("create")}>
+                Submit a Recipe
               </Button>
             </Flex>
             <Flex alignItems="center" my={2}>
-              <Box w="12px" h="12px" bg="deeppink" m={2} />
-              <Button variant="link" onClick={() => setCurrentView("preferences")}>
-                Preferences
+              <Box w="12px" h="12px" bg="darkcyan" m={2} />
+              <Button variant="link" onClick={() => setCurrentView("password")}>
+                Change Password
               </Button>
             </Flex>
           </Stack>
