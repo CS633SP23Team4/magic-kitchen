@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   Modal,
   ModalOverlay,
@@ -19,7 +20,11 @@ import { SiGoogle } from "react-icons/si"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth, RegisterLocal, signInWithGoogle } from "../firebaseInit"
 
-export function SignupModal() {
+SignupModal.propTypes = {
+  setUserFunc: PropTypes.func,
+}
+
+export function SignupModal(props) {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
   const { isOpen: isSignUpOpen, onOpen: onSignUpOpen, onClose: onSignUpClose } = useDisclosure()
   const [email, setEmail] = useState("")
@@ -30,21 +35,17 @@ export function SignupModal() {
   const [user, setUser] = useState("")
 
   useEffect(() => {
-    if (user.uid) {
-      localStorage.setItem("user", user.uid)
-      navigate("/")
-      window.location.reload()
+    if (user) {
+      props.setUserFunc(user.uid)
     }
   }, [user])
 
   const SignInGoogle = async () => {
     try {
-      const user = await signInWithGoogle()
-      setUser(user.uid)
-      if (user) {
-        localStorage.setItem("user", user.uid)
-        navigate("/")
-        window.location.reload()
+      const googleUser = await signInWithGoogle()
+      if (googleUser) {
+        localStorage.setItem("user", googleUser)
+        setUser(googleUser)
       }
     } catch (err) {
       console.error(err) // Log the error for debugging
