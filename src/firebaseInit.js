@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app"
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth"
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -25,6 +30,16 @@ export const signInWithGoogle = async () => {
   } catch (err) {
     console.error(err)
     throw new Error(err)
+  }
+}
+
+export const RegisterLocal = async (email, password) => {
+  try {
+    // Create a new user with email and password using firebase
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    await addUserFirestore(userCredential.user)
+  } catch (e) {
+    throw new Error(e)
   }
 }
 export const addUserFirestore = async (user) => {

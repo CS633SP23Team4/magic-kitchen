@@ -16,8 +16,8 @@ import {
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
-import { auth, signInWithGoogle } from "../firebaseInit"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth, RegisterLocal, signInWithGoogle } from "../firebaseInit"
 
 export function SignupModal() {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
@@ -85,7 +85,7 @@ export function SignupModal() {
     }
   }
 
-  const validateRegisteration = () => {
+  const validateRegistration = () => {
     let isValid = true
     if (password !== "" && conf_password !== "") {
       if (password !== conf_password) {
@@ -100,11 +100,11 @@ export function SignupModal() {
     return isValid
   }
 
-  const RegisterUser = (e) => {
+  const RegisterUser = async (e) => {
     e.preventDefault()
-    if (validateRegisteration()) {
+    if (validateRegistration()) {
       // Create a new user with email and password using firebase
-      createUserWithEmailAndPassword(auth, email, password)
+      await RegisterLocal(email, password)
     }
     setEmail("")
     setPassword("")
