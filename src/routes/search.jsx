@@ -35,7 +35,7 @@ export default function Search() {
       )
     }
     setDisplayedRecipes(filteredRecipes)
-  }, [cookingTimeOption])
+  }, [recipes, cookingTimeOption])
 
   return (
     <Layout>
