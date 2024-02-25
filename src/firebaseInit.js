@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: process.env.REACT_APP_apiKey,
   authDomain: process.env.REACT_APP_authDomain,
   projectId: process.env.REACT_APP_projectId,
   storageBucket: process.env.REACT_APP_storageBucket,
