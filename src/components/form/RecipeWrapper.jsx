@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { pushUserRecipe } from "../../firebaseInit"
 import { FormWrapper } from "./FormWrapper"
 import CustomRecipe from "./RecipeForm"
-import { pushUserRecipe } from "../../firebaseInit"
 
 export function CreateNewRecipeForm() {
   const getInitialFormData = () => ({
@@ -9,14 +9,16 @@ export function CreateNewRecipeForm() {
     description: "",
     intoleranceTags: [],
     timeEstimate: 0,
-    steps: [{ number: 1, text: "" }],
-    ingredients: [{ id: "0", name: "", amount: 0 }],
+    steps: [{ id: 1, instructions: "" }],
+    ingredients: [{ id: "0", item: "", amount: 0 }],
     tips: "",
     kitchenware: "",
   })
   const [formData, setFormData] = useState(getInitialFormData())
 
-  const handleSetFormData = (items) => {
+  var loggedInUser = localStorage.getItem('user');
+
+  const handleSetFormData = async (items) => {
     setFormData(items);
     const requiredFields = ['name', 'description', 'timeEstimate', 'ingredients', 'steps'];
     const missingFields = requiredFields.filter(field => !formData[field] || formData[field].length === 0);
@@ -26,18 +28,17 @@ export function CreateNewRecipeForm() {
       // Display an error message to the user
       return;
     }
-    handleSubmit();
+    const result = await pushUserRecipe(loggedInUser, formData);
+    if (result) console.log("success");
   };
 
+  useEffect(() => {
+    setFormData(getInitialFormData());
+  }, [loggedInUser]);
 
-  var loggedInUser = localStorage.getItem('user');
-  const handleSubmit = async () => {
-    const result = await pushUserRecipe(loggedInUser, formData)
-    if (result) console.log("success")
-  }
   return (
     <FormWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSetFormData}>
         <CustomRecipe setFormData={handleSetFormData} />
       </form>
     </FormWrapper>

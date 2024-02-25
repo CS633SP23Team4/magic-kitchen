@@ -41,7 +41,7 @@ export async function getUserRecipes(user) {
 export async function pushUserRecipe(userId, recipeData) {
   try {
     const docRef = await addDoc(collection(db, "userRecipes"), recipeData);
-    const link = await addDoc(collection(db,'/users', userId,'MadeRecipe'),docRef.id)
+    // const link = await addDoc(collection(db,'/users', userId,'MadeRecipe'),docRef.id)
     console.log("Document written with ID: ", docRef.id);
     return true; // Indicate success
   } catch (error) {
