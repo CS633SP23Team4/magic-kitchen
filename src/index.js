@@ -8,7 +8,6 @@ import Home from "./routes/home"
 import Tips from "./routes/tips"
 import "@fontsource/aladin"
 import CreateRecipe from "./routes/createRecipe"
-import Tips from "./routes/tips"
 import Search from "./routes/search"
 
 const colors = {
