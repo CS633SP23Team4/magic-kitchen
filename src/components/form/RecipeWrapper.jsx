@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { pushUserRecipe } from "../../firebaseInit"
 import { FormWrapper } from "./FormWrapper"
 import CustomRecipe from "./RecipeForm"
+import { pushUserRecipe } from "../../firebaseInit"
 
 export function CreateNewRecipeForm() {
   const getInitialFormData = () => ({
@@ -17,22 +17,11 @@ export function CreateNewRecipeForm() {
   const [formData, setFormData] = useState(getInitialFormData())
 
   const handleSetFormData = (items) => {
-    setFormData(items);
-    const requiredFields = ['name', 'description', 'timeEstimate', 'ingredients', 'steps'];
-    const missingFields = requiredFields.filter(field => !formData[field] || formData[field].length === 0);
-
-    if (missingFields.length > 0) {
-      console.error(`Missing required fields: ${missingFields.join(', ')}`);
-      // Display an error message to the user
-      return;
-    }
-    handleSubmit();
-  };
-
-
-  var loggedInUser = localStorage.getItem('user');
+    setFormData(items)
+    handleSubmit()
+  }
   const handleSubmit = async () => {
-    const result = await pushUserRecipe(loggedInUser, formData)
+    const result = await pushUserRecipe("testUser", formData)
     if (result) console.log("success")
   }
   return (
