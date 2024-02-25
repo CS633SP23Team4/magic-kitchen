@@ -16,8 +16,8 @@ import {
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
-
-// import { signInWithGoogle } from "../firebaseInit"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { auth, signInWithGoogle } from "../firebaseInit"
 
 export function SignupModal() {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
@@ -30,7 +30,6 @@ export function SignupModal() {
   const [user, setUser] = useState("")
 
   useEffect(() => {
-    //check and see if there is a user that is logged in
     if (user.uid) {
       localStorage.setItem("user", user.uid)
       navigate("/")
@@ -40,8 +39,7 @@ export function SignupModal() {
 
   const SignInGoogle = async () => {
     try {
-      const user = null
-      //await signInWithGoogle()
+      const user = await signInWithGoogle()
       setUser(user.uid)
       if (user) {
         localStorage.setItem("user", user.uid)
@@ -75,10 +73,10 @@ export function SignupModal() {
     }
 
     try {
-      //const userCredential =
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
 
       // Successfully signed in
-      //setUser(userCredential.user)
+      setUser(userCredential.user)
       setEmail("")
       setPassword("")
       navigate("/")
@@ -96,7 +94,7 @@ export function SignupModal() {
       } else if (!email.includes("@")) {
         setError("Invalid Email")
       } else {
-        setError("Registeration Successful")
+        setError("Registration Successful")
       }
     }
     return isValid
@@ -106,11 +104,7 @@ export function SignupModal() {
     e.preventDefault()
     if (validateRegisteration()) {
       // Create a new user with email and password using firebase
-      try {
-        //createUserWithEmailAndPassword(auth, email, password)
-      } catch (err) {
-        setError(err.message)
-      }
+      createUserWithEmailAndPassword(auth, email, password)
     }
     setEmail("")
     setPassword("")
