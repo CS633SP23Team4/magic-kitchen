@@ -16,7 +16,8 @@ import {
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
-import { signInWithGoogle } from "../firebaseInit"
+
+// import { signInWithGoogle } from "../firebaseInit"
 
 export function SignupModal() {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
@@ -39,7 +40,8 @@ export function SignupModal() {
 
   const SignInGoogle = async () => {
     try {
-      const user = await signInWithGoogle()
+      const user = null
+      //await signInWithGoogle()
       setUser(user.uid)
       if (user) {
         localStorage.setItem("user", user.uid)
@@ -73,7 +75,7 @@ export function SignupModal() {
     }
 
     try {
-      //const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      //const userCredential =
 
       // Successfully signed in
       //setUser(userCredential.user)
