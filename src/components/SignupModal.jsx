@@ -35,7 +35,7 @@ export function SignupModal() {
       navigate("/")
       window.location.reload()
     }
-  })
+  }, [user])
 
   const SignInGoogle = async () => {
     try {
@@ -94,7 +94,7 @@ export function SignupModal() {
       } else if (!email.includes("@")) {
         setError("Invalid Email")
       } else {
-        setError("Registration Successful")
+        setError("Registration Successful! Please log in below to continue.")
       }
     }
     return isValid
