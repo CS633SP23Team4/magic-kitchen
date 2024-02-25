@@ -16,6 +16,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
+import { signInWithGoogle } from "../firebaseInit"
 
 export function SignupModal() {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
@@ -25,7 +26,7 @@ export function SignupModal() {
   const [conf_password, setConfPassword] = useState("")
   const [error, setError] = useState("")
   const navigate = useNavigate()
-  const [user] = useState("")
+  const [user, setUser] = useState("")
 
   useEffect(() => {
     //check and see if there is a user that is logged in
@@ -36,20 +37,20 @@ export function SignupModal() {
     }
   })
 
-  // const SignInGoogle = async () => {
-  //   try {
-  //     //const user = await signInWithGoogle()
-  //     setUser(user.uid)
-  //     if (user) {
-  //       localStorage.setItem("user", user.uid)
-  //       navigate("/")
-  //       window.location.reload()
-  //     }
-  //   } catch (err) {
-  //     console.error(err) // Log the error for debugging
-  //     setError("An error occurred while signing in. Please try again.") // User-friendly error message
-  //   }
-  // }
+  const SignInGoogle = async () => {
+    try {
+      const user = await signInWithGoogle()
+      setUser(user.uid)
+      if (user) {
+        localStorage.setItem("user", user.uid)
+        navigate("/")
+        window.location.reload()
+      }
+    } catch (err) {
+      console.error(err) // Log the error for debugging
+      setError("An error occurred while signing in. Please try again.") // User-friendly error message
+    }
+  }
 
   const SignIn = async (e) => {
     e.preventDefault()
@@ -169,11 +170,7 @@ export function SignupModal() {
 
           <ModalFooter>
             <ButtonGroup variant="solid" spacing="70px" alignItems="center">
-              <Button
-                leftIcon={<SiGoogle />}
-                colorScheme="blue"
-                onClick={() => console.log("This is the sign in calling")}
-              >
+              <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={SignInGoogle}>
                 | Google Login
               </Button>
               <Button colorScheme="blue" variant="link" onClick={openSignUpModal}>
@@ -228,7 +225,7 @@ export function SignupModal() {
 
           <ModalFooter>
             <ButtonGroup variant="solid" spacing="12" alignItems="center">
-              <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={null}>
+              <Button leftIcon={<SiGoogle />} colorScheme="blue" onClick={SignInGoogle}>
                 | Google Login
               </Button>
               <Button colorScheme="blue" variant="link" onClick={openLoginModal}>
