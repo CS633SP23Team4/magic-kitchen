@@ -44,6 +44,7 @@ export default function ProfileForm(props) {
     const [nameFirst, setNameFirst] = useState("")
     const [nameLast, setNameLast] = useState("")
     const [bio, setBio] = useState("")
+    const [diet, setDiet] = useState([])
     const [editable, setEditable] = useState(false)
     const [message, setMessage] = useState("")
     const [messageColor, setMessageColor] = useState("green")
@@ -62,6 +63,7 @@ export default function ProfileForm(props) {
         setNameFirst(currentUserData.nameFirst)
         setNameLast(currentUserData.nameLast)
         setBio(currentUserData.bio)
+        setDiet(currentUserData.diet)
     }, [currentUserData])
 
     const editProfile = () => {
@@ -77,6 +79,7 @@ export default function ProfileForm(props) {
             nameFirst: nameFirst,
             nameLast: nameLast,
             bio: bio,
+            diet: diet
         }
         try {
             await updateUserData(props.user, userData)
@@ -132,6 +135,10 @@ export default function ProfileForm(props) {
                             ...base
                         })
                     }}
+                    onChange={(selectedOption) => {
+                        setDiet(selectedOption)
+                    }}
+                    value={diet}
                     isMulti
                     isDisabled={!editable}
                     options={DietOptions}
