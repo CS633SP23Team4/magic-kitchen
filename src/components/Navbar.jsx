@@ -86,6 +86,9 @@ export function HamburgerMenu(props) {
                 key={route.id}
                 as={ReactRouterLink}
                 to={route.path}
+                state={{
+                  user: props.user,
+                }}
                 _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
               >
                 {route.name}
@@ -120,7 +123,7 @@ export function HamburgerMenu(props) {
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(localStorage.getItem("user"))
 
   const setUserFunc = (user) => {
     setUser(user)
@@ -152,6 +155,9 @@ export default function Navbar() {
                   <BreadcrumbLink
                     as={ReactRouterLink}
                     to={route.path}
+                    state={{
+                      user: user,
+                    }}
                     _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
                   >
                     <Text>{route.name}</Text>

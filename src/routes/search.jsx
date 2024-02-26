@@ -57,21 +57,22 @@ export default function Search() {
           </Box>
 
           <Box>
-            {displayedRecipes.map(
-              (recipe) =>
-                recipe.suspiciousDataScore < 60 && (
-                  <RecipeCard
-                    key={recipe.id}
-                    title={recipe.title}
-                    cookTime={recipe.readyInMinutes}
-                    rating={recipe.spoonacularScore}
-                    reviewCount={recipe.aggregateLikes}
-                    imgLink={recipe.image}
-                    link={recipe.spoonacularSourceUrl}
-                    extendedIngredients={recipe.extendedIngredients}
-                  />
-                )
-            )}
+            {displayedRecipes &&
+              displayedRecipes.map(
+                (recipe) =>
+                  recipe.suspiciousDataScore < 60 && (
+                    <RecipeCard
+                      key={recipe.id}
+                      title={recipe.title}
+                      cookTime={recipe.readyInMinutes}
+                      rating={recipe.spoonacularScore}
+                      reviewCount={recipe.aggregateLikes}
+                      imgLink={recipe.image}
+                      link={recipe.spoonacularSourceUrl}
+                      extendedIngredients={recipe.extendedIngredients}
+                    />
+                  )
+              )}
           </Box>
         </GridItem>
       </Grid>
