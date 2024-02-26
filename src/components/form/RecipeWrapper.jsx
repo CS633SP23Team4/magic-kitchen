@@ -16,25 +16,31 @@ export function CreateNewRecipeForm() {
   })
   const [formData, setFormData] = useState(getInitialFormData())
 
-  var loggedInUser = localStorage.getItem('user');
+  var loggedInUser = localStorage.getItem("user")
 
   const handleSetFormData = async (items) => {
-    setFormData(items);
-    const requiredFields = ['name', 'description', 'timeEstimate', 'ingredients', 'steps'];
-    const missingFields = requiredFields.filter(field => !formData[field] || formData[field].length === 0);
+    setFormData(items)
+    const requiredFields = ["name", "description", "timeEstimate", "ingredients", "steps"]
+    const missingFields = requiredFields.filter(
+      (field) => !formData[field] || formData[field].length === 0
+    )
 
     if (missingFields.length > 0) {
-      console.error(`Missing required fields: ${missingFields.join(', ')}`);
+      console.error(`Missing required fields: ${missingFields.join(", ")}`)
       // Display an error message to the user
-      return;
+      return
     }
-    const result = await pushUserRecipe(loggedInUser, formData);
-    if (result) console.log("success");
-  };
+    const result = handleSubmit()
+    if (result) console.log("success")
+  }
 
   useEffect(() => {
-    setFormData(getInitialFormData());
-  }, [loggedInUser]);
+    setFormData(getInitialFormData())
+  }, [loggedInUser])
+  const handleSubmit = async () => {
+    const result = await pushUserRecipe("testUser", formData)
+    if (result) console.log("success")
+  }
 
   return (
     <FormWrapper>
