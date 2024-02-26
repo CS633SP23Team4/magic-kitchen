@@ -32,10 +32,10 @@ export function CreateNewRecipeForm() {
 
   return (
     <FormWrapper>
-      <Text color={messageColor}>{message}</Text>
       <form onSubmit={(e) => e.preventDefault()}>
         <CustomRecipe user={user} submitFunction={handleSubmit} />
       </form>
+      <Text color={messageColor}>{message}</Text>
     </FormWrapper>
   )
 }
