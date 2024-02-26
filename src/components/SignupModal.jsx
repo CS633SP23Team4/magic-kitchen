@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth, RegisterLocal, signInWithGoogle } from "../firebaseInit"
+import { auth, getCurrentUserData, RegisterLocal, signInWithGoogle } from "../firebaseInit"
 
 SignupModal.propTypes = {
   setUserFunc: PropTypes.func,
@@ -33,18 +33,30 @@ export function SignupModal(props) {
   const [error, setError] = useState("")
   const navigate = useNavigate()
   const [user, setUser] = useState("")
+  const [userData, setUserData] = useState("")
 
   useEffect(() => {
     if (user) {
-      props.setUserFunc(user.uid)
+      localStorage.setItem("userId", user.uid)
+      localStorage.setItem("userData", JSON.stringify(userData))
+      props.setUserFunc(user.uid, userData)
     }
-  }, [user])
+  }, [user, userData])
+
+  const getUserData = async (id) => {
+    try {
+      const currentUserData = await getCurrentUserData(id)
+      if (currentUserData) setUserData(currentUserData)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const SignInGoogle = async () => {
     try {
       const googleUser = await signInWithGoogle()
       if (googleUser) {
-        localStorage.setItem("user", googleUser)
+        await getUserData(googleUser.uid)
         setUser(googleUser)
       }
     } catch (err) {
@@ -77,7 +89,9 @@ export function SignupModal(props) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
 
       // Successfully signed in
+      await getUserData(userCredential.user.uid)
       setUser(userCredential.user)
+
       setEmail("")
       setPassword("")
       navigate("/")
