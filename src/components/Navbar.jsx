@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   BreadcrumbItem,
   Breadcrumb,
@@ -16,11 +17,10 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon } from "@chakra-ui/icons"
 import { NavLink as ReactRouterLink } from "react-router-dom"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { MkIcon } from "./Logo"
 import { SignupModal } from "./SignupModal"
 import { SignOutButton } from "./SignOutButton"
-
 
 const routes_isLoggedIn = [
   {
@@ -68,44 +68,35 @@ const routes_notLoggedIn = [
   },
 ]
 
-export function HamburgerMenu() {
-  const [user, setUser] = useState();
- 
-  useEffect( () => {
-    setUser(null);
-    var loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      setUser(loggedInUser);
-    }else {
-      setUser(null);
-    }
-  })
-  
-  if (user) {
-    return(
+HamburgerMenu.propTypes = {
+  user: PropTypes.string,
+}
+
+export function HamburgerMenu(props) {
+  if (props.user) {
+    return (
       <Menu>
-      <MenuButton as={Button}>
-        <HamburgerIcon></HamburgerIcon>
-      </MenuButton>
-      <Portal>
-        <MenuList>
-          {routes_isLoggedIn.map((route) => (
-            <MenuItem
-              key={route.id}
-              as={ReactRouterLink}
-              to={route.path}
-              _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
-            >
-              {route.name}
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Portal>
-    </Menu>
+        <MenuButton as={Button}>
+          <HamburgerIcon></HamburgerIcon>
+        </MenuButton>
+        <Portal>
+          <MenuList>
+            {routes_isLoggedIn.map((route) => (
+              <MenuItem
+                key={route.id}
+                as={ReactRouterLink}
+                to={route.path}
+                _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+              >
+                {route.name}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Portal>
+      </Menu>
     )
   }
   return (
-
     <Menu>
       <MenuButton as={Button}>
         <HamburgerIcon></HamburgerIcon>
@@ -129,18 +120,11 @@ export function HamburgerMenu() {
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState();
- 
-  useEffect( () => {
-    setUser(null);
-    var loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      setUser(loggedInUser)
-    } else {
-      setUser(null)
-    }
-  })
+  const [user, setUser] = useState(null)
 
+  const setUserFunc = (user) => {
+    setUser(user)
+  }
   if (user) {
     return (
       <>
@@ -161,28 +145,28 @@ export default function Navbar() {
             </Hide>
           </Box>
 
-        <Hide below="md">
-          <Breadcrumb p="1em">
-            {routes_isLoggedIn.map((route) => (
-              <BreadcrumbItem key={route.id}>
-                <BreadcrumbLink
-                  as={ReactRouterLink}
-                  to={route.path}
-                  _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
-                >
-                  <Text>{route.name}</Text>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            ))}
-          </Breadcrumb>
-        </Hide>
+          <Hide below="md">
+            <Breadcrumb p="1em">
+              {routes_isLoggedIn.map((route) => (
+                <BreadcrumbItem key={route.id}>
+                  <BreadcrumbLink
+                    as={ReactRouterLink}
+                    to={route.path}
+                    _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
+                  >
+                    <Text>{route.name}</Text>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              ))}
+            </Breadcrumb>
+          </Hide>
 
           <Box>
             <SignOutButton />
           </Box>
 
           <Show below="md">
-            <HamburgerMenu />
+            <HamburgerMenu user={user} />
           </Show>
         </Flex>
       </>
@@ -225,7 +209,7 @@ export default function Navbar() {
         </Hide>
 
         <Box>
-          <SignupModal />
+          <SignupModal setUserFunc={setUserFunc} />
         </Box>
 
         <Show below="md">
@@ -235,4 +219,3 @@ export default function Navbar() {
     </>
   )
 }
-

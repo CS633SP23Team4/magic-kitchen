@@ -97,7 +97,7 @@ export function IngredientSearch() {
                 onChange={(e) => setIngredients(e)}
             />
             <Flex justify="center" pt={2}>
-                <SecondaryButton clickFunction={findRecipes} text="Search"/>
+                <SecondaryButton clickFunction={() => findRecipes()} text="Search"/>
             </Flex>
 
         </>

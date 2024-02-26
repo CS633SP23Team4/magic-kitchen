@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   Modal,
   ModalOverlay,
@@ -16,10 +17,14 @@ import {
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SiGoogle } from "react-icons/si"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
-import { auth, signInWithGoogle } from "../firebaseInit"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth, RegisterLocal, signInWithGoogle } from "../firebaseInit"
 
-export function SignupModal() {
+SignupModal.propTypes = {
+  setUserFunc: PropTypes.func,
+}
+
+export function SignupModal(props) {
   const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
   const { isOpen: isSignUpOpen, onOpen: onSignUpOpen, onClose: onSignUpClose } = useDisclosure()
   const [email, setEmail] = useState("")
@@ -30,21 +35,17 @@ export function SignupModal() {
   const [user, setUser] = useState("")
 
   useEffect(() => {
-    if (user.uid) {
-      localStorage.setItem("user", user.uid)
-      navigate("/")
-      window.location.reload()
+    if (user) {
+      props.setUserFunc(user.uid)
     }
-  })
+  }, [user])
 
   const SignInGoogle = async () => {
     try {
-      const user = await signInWithGoogle()
-      setUser(user.uid)
-      if (user) {
-        localStorage.setItem("user", user.uid)
-        navigate("/")
-        window.location.reload()
+      const googleUser = await signInWithGoogle()
+      if (googleUser) {
+        localStorage.setItem("user", googleUser)
+        setUser(googleUser)
       }
     } catch (err) {
       console.error(err) // Log the error for debugging
@@ -85,7 +86,7 @@ export function SignupModal() {
     }
   }
 
-  const validateRegisteration = () => {
+  const validateRegistration = () => {
     let isValid = true
     if (password !== "" && conf_password !== "") {
       if (password !== conf_password) {
@@ -94,17 +95,17 @@ export function SignupModal() {
       } else if (!email.includes("@")) {
         setError("Invalid Email")
       } else {
-        setError("Registration Successful")
+        setError("Registration Successful! Please log in below to continue.")
       }
     }
     return isValid
   }
 
-  const RegisterUser = (e) => {
+  const RegisterUser = async (e) => {
     e.preventDefault()
-    if (validateRegisteration()) {
+    if (validateRegistration()) {
       // Create a new user with email and password using firebase
-      createUserWithEmailAndPassword(auth, email, password)
+      await RegisterLocal(email, password)
     }
     setEmail("")
     setPassword("")
