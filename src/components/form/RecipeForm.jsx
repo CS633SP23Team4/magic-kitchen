@@ -63,7 +63,7 @@ const colourStyles: StylesConfig = {
         padding: "2px",
         minWidth: "25vw"
     }),
-    menu: (styles, state) => ({
+    menu: (styles) => ({
         ...styles,
         position: "relative",
         top: 0
