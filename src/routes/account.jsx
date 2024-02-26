@@ -11,6 +11,7 @@ import { CreateNewRecipeForm } from "../components/form/RecipeWrapper"
 UpdateView.propTypes = {
   value: PropTypes.string,
   user: PropTypes.string,
+  userData: PropTypes.any,
 }
 
 function UpdateView(props) {
@@ -38,12 +39,6 @@ function UpdateView(props) {
             <Button onClick={() => resetMyPass(props.user)}>Reset</Button>
           </Flex>
         </>
-      )
-    case "preferences":
-      return (
-        <FormWrapper>
-          <Text>IDK WHAT GOES HERE</Text>
-        </FormWrapper>
       )
     case "create":
       return <CreateNewRecipeForm />
@@ -86,7 +81,6 @@ export default function Account() {
             </Flex>
           </Stack>
         </GridItem>
-        {/*BELOW GRID ITEM CHANGE VIEW BASED ON ABOVE CLICKED ELEMENT*/}
         <GridItem colSpan={3}>
           {<UpdateView value={currentView} user={user} userData={userData} />}
         </GridItem>
