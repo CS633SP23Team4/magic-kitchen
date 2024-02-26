@@ -19,12 +19,12 @@ import {
 } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmx2m9NxMjIy5Iy94fwZdfKoT44P57t2o",
-  authDomain: "magic-kitchen-b5f37.firebaseapp.com",
-  projectId: "magic-kitchen-b5f37",
-  storageBucket: "magic-kitchen-b5f37.appspot.com",
-  messagingSenderId: "275863630421",
-  appId: "1:275863630421:web:29d06a1eddcc79e21e5adc",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
 }
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
