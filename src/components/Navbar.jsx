@@ -84,7 +84,7 @@ export function HamburgerMenu(props) {
           <MenuList>
             {routes_isLoggedIn.map((route) => (
               <MenuItem
-                key={route.id}
+                key={route.key}
                 as={ReactRouterLink}
                 to={route.path}
                 state={{
@@ -110,7 +110,7 @@ export function HamburgerMenu(props) {
         <MenuList>
           {routes_notLoggedIn.map((route) => (
             <MenuItem
-              key={route.id}
+              key={route.key}
               as={ReactRouterLink}
               to={route.path}
               _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
@@ -155,7 +155,7 @@ export default function Navbar() {
           <Hide below="md">
             <Breadcrumb p="1em">
               {routes_isLoggedIn.map((route) => (
-                <BreadcrumbItem key={route.id}>
+                <BreadcrumbItem key={route.key}>
                   <BreadcrumbLink
                     as={ReactRouterLink}
                     to={route.path}
@@ -206,7 +206,7 @@ export default function Navbar() {
         <Hide below="md">
           <Breadcrumb p="1em">
             {routes_notLoggedIn.map((route) => (
-              <BreadcrumbItem key={route.id}>
+              <BreadcrumbItem key={route.key}>
                 <BreadcrumbLink
                   as={ReactRouterLink}
                   to={route.path}
