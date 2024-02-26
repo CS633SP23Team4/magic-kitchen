@@ -7,7 +7,7 @@ import CustomRecipe from "./RecipeForm"
 
 export function CreateNewRecipeForm() {
   const data = useLocation()
-  const user = data.state.user
+  const { user } = data.state
   const [message, setMessage] = useState("")
   const [messageColor, setMessageColor] = useState("green")
 

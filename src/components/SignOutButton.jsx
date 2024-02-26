@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/react"
+
 import { redirect } from "react-router-dom"
 
 export function SignOutButton() {
@@ -7,5 +8,7 @@ export function SignOutButton() {
     redirect("/")
     window.location.reload()
   }
+
+export function SignOutButton() {
   return <Button onClick={SignOut}>Sign out</Button>
 }

@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth"
 import {
   doc,
@@ -41,6 +42,21 @@ export const signInWithGoogle = async () => {
     console.error(err)
     throw new Error(err)
   }
+}
+
+export const resetPassword = async (userId) => {
+  const user = await getCurrentUserData(userId)
+  const email = user.email
+  return sendPasswordResetEmail(auth, email)
+    .then(() => {
+      return "Success! An email has been sent for you to reset your password."
+    })
+    .catch((error) => {
+      const errorCode = error.code
+      const errorMessage = error.message
+      console.error(errorMessage, errorCode)
+      return errorMessage
+    })
 }
 
 export async function getUserRecipes(user) {
@@ -93,5 +109,28 @@ export const addUserFirestore = async (user) => {
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
     })
+  }
+}
+
+export const getCurrentUserData = async (user) => {
+  const userRef = doc(db, "users", user)
+  const userSnap = await getDoc(userRef)
+  if (userSnap.exists()) {
+    return userSnap.data()
+  }
+}
+
+export const pushUserData = async (user, data) => {
+  Object.entries(data).forEach(([, value]) => {
+    if (value === undefined) {
+      delete data.key
+    }
+  })
+  const userRef = doc(db, "users", user)
+  try {
+    await setDoc(userRef, data, { merge: true })
+    console.log("yay")
+  } catch (e) {
+    console.error(e)
   }
 }
