@@ -50,7 +50,7 @@ function UpdateView(props) {
     default:
       return (
         <FormWrapper header="Personal Information">
-          <ProfileForm user={props.user} />
+          <ProfileForm user={props.user} userData={props.userData} />
         </FormWrapper>
       )
   }
@@ -59,7 +59,7 @@ function UpdateView(props) {
 export default function Account() {
   const [currentView, setCurrentView] = useState("personal")
   const data = useLocation()
-  const user = data.state.user
+  const { user, userData } = data.state
 
   return (
     <Layout>
@@ -87,7 +87,9 @@ export default function Account() {
           </Stack>
         </GridItem>
         {/*BELOW GRID ITEM CHANGE VIEW BASED ON ABOVE CLICKED ELEMENT*/}
-        <GridItem colSpan={3}>{<UpdateView value={currentView} user={user} />}</GridItem>
+        <GridItem colSpan={3}>
+          {<UpdateView value={currentView} user={user} userData={userData} />}
+        </GridItem>
       </Grid>
     </Layout>
   )
