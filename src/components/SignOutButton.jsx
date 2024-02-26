@@ -1,14 +1,12 @@
-import { Button } from "@chakra-ui/react";
-
-const SignOut = async () => {
-    localStorage.clear();
-    window.location.reload();
-}
-
-
+import { Button } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 
 export function SignOutButton() {
-    return(
-        <Button onClick={SignOut}>Sign out</Button>
-    )
+  const navigate = useNavigate()
+
+  const SignOut = async () => {
+    localStorage.clear()
+    navigate("/")
+  }
+  return <Button onClick={SignOut}>Sign out</Button>
 }
