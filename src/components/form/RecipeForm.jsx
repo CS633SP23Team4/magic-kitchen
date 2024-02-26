@@ -63,9 +63,16 @@ const colourStyles: StylesConfig = {
         padding: "2px",
         minWidth: "25vw"
     }),
+    menu: (styles, state) => ({
+        ...styles,
+        position: "relative",
+        top: 0
+    }),
+
     option: (styles, {isDisabled, isFocused}) => {
         return {
             ...styles,
+
             backgroundColor: isDisabled
                 ? undefined
                 : isFocused
