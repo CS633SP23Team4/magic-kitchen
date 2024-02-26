@@ -87,11 +87,10 @@ export default function ProfileForm(props) {
     return (
         <>
             <FormControl>
-                <Text>{email}</Text>
                 <FormLabel fontSize={24}>Avatar</FormLabel>
                 <Flex justify="center">
-                    <Avatar size="2xl" name="Christian Nwamba" src="https://bit.ly/code-beast">{" "}
-                        {editable && <AvatarBadge border="0" boxSize="1em"><EditButton/></AvatarBadge>}
+                    <Avatar size="2xl" name={nameFirst} src="https://bit.ly/tioluwani-kolawole">{" "}
+                        
                     </Avatar>
                 </Flex>
             </FormControl>
