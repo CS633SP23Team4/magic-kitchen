@@ -6,9 +6,10 @@ import "./index.css"
 import reportWebVitals from "./reportWebVitals"
 import Home from "./routes/home"
 import Tips from "./routes/tips"
-import "@fontsource/aladin"
-import CreateRecipe from "./routes/createRecipe"
+import Account from "./routes/account"
 import Search from "./routes/search"
+import CreateRecipe from "./routes/createRecipe"
+import "@fontsource/aladin"
 
 const colors = {
   brand: {
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/account",
-    element: <Home />,
+    element: <Account />,
   },
 ])
 
