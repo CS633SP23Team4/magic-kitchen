@@ -123,7 +123,7 @@ export function HamburgerMenu(props) {
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(localStorage.getItem("user"))
 
   const setUserFunc = (user) => {
     setUser(user)
