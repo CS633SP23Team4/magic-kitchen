@@ -119,3 +119,13 @@ export const getCurrentUserData = async (user) => {
     return userSnap.data()
   }
 }
+
+export const pushUserData = async (user, data) => {
+  Object.entries(data).forEach(([, value]) => {
+    if (value === undefined) {
+      delete data.key
+    }
+  })
+  const userRef = doc(db, "users", user)
+  await setDoc(userRef, data, { merge: true })
+}

@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import PropTypes from "prop-types";
 import {
     FormControl,
@@ -14,7 +14,7 @@ import {
 import {NotAllowedIcon} from "@chakra-ui/icons";
 import Select, {components, OptionProps} from "react-select"
 import {DietOption, DietOptions} from "../../data/diet.ts"
-import {getCurrentUserData} from "../../firebaseInit";
+import {pushUserData} from "../../firebaseInit";
 import {EditButton, PrimaryButton, TertiaryButton} from "./CustomButton";
 
 
@@ -35,29 +35,59 @@ const Option = (props: OptionProps<DietOption>) => {
     );
 };
 
-const getUserData = async (user) => {
-    const userData = await getCurrentUserData(user)
-    return userData
+const updateUserData = async (user, data) => {
+    const response = await pushUserData(user, data)
+    return response
 }
 
 ProfileForm.propTypes = {
-    user: PropTypes.string
+    user: PropTypes.string,
+    userData: PropTypes.any
 }
 
 export default function ProfileForm(props) {
     const [nameFirst, setNameFirst] = useState("")
     const [nameLast, setNameLast] = useState("")
+    const [email, setEmail] = useState("")
     const [bio, setBio] = useState("")
     const [editable, setEditable] = useState(false)
-    const userData = getUserData(props.user)
+    const [message, setMessage] = useState("")
+    const [messageColor, setMessageColor] = useState("green")
+
 
     const editProfile = () => {
         setEditable(true)
     }
+    useEffect(() => {
+        setEmail(props.userData.email)
+        setNameFirst(props.userData.nameFirst)
+        setNameLast(props.userData.nameLast)
+        setBio(props.userData.bio)
+    }, [props.user, props.userData])
+
+    const handleSubmit = async () => {
+        const userData = {
+            nameFirst: nameFirst,
+            nameLast: nameLast,
+            bio: bio,
+        }
+        try {
+            await updateUserData(props.user, userData)
+            setMessage("Success! Your profile has been updated.")
+            setMessageColor("green")
+            setEditable(false)
+        } catch (e) {
+            console.error(e)
+            setMessage(e)
+            setMessageColor("red")
+        }
+
+    }
+
     return (
         <>
             <FormControl>
-                <Text>{userData.email}</Text>
+                <Text>{email}</Text>
                 <FormLabel fontSize={24}>Avatar</FormLabel>
                 <Flex justify="center">
                     <Avatar size="2xl" name="Christian Nwamba" src="https://bit.ly/code-beast">{" "}
@@ -124,8 +154,12 @@ export default function ProfileForm(props) {
                     mt={4}
                     type="submit"
                     text="Submit"
+                    clickFunction={
+                        handleSubmit
+                    }
                 />
             }
+            <Text color={messageColor}>{message}</Text>
 
         </>
     )
