@@ -44,8 +44,10 @@ export const signInWithGoogle = async () => {
   }
 }
 
-export const resetPassword = (email) => {
-  sendPasswordResetEmail(auth, email)
+export const resetPassword = async (userId) => {
+  const user = await getCurrentUserData(userId)
+  const email = user.email
+  return sendPasswordResetEmail(auth, email)
     .then(() => {
       return "Success! An email has been sent for you to reset your password."
     })
@@ -107,5 +109,13 @@ export const addUserFirestore = async (user) => {
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
     })
+  }
+}
+
+export const getCurrentUserData = async (user) => {
+  const userRef = doc(db, "users", user)
+  const userSnap = await getDoc(userRef)
+  if (userSnap.exists()) {
+    return userSnap.data()
   }
 }
