@@ -70,6 +70,7 @@ const routes_notLoggedIn = [
 
 HamburgerMenu.propTypes = {
   user: PropTypes.string,
+  userData: PropTypes.any,
 }
 
 export function HamburgerMenu(props) {
@@ -88,6 +89,7 @@ export function HamburgerMenu(props) {
                 to={route.path}
                 state={{
                   user: props.user,
+                  userData: props.userData,
                 }}
                 _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
               >
@@ -123,10 +125,12 @@ export function HamburgerMenu(props) {
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState(localStorage.getItem("user"))
+  const [user, setUser] = useState(localStorage.getItem("userId"))
+  const [userData, setUserData] = useState(localStorage.getItem("userData"))
 
-  const setUserFunc = (user) => {
+  const setUserFunc = (user, data) => {
     setUser(user)
+    setUserData(data)
   }
   if (user) {
     return (
@@ -157,6 +161,7 @@ export default function Navbar() {
                     to={route.path}
                     state={{
                       user: user,
+                      userData: userData,
                     }}
                     _activeLink={{ fontWeight: "bold", borderBottom: "2px" }}
                   >
@@ -172,7 +177,7 @@ export default function Navbar() {
           </Box>
 
           <Show below="md">
-            <HamburgerMenu user={user} />
+            <HamburgerMenu user={user} userData={userData} />
           </Show>
         </Flex>
       </>

@@ -49,7 +49,13 @@ TertiaryButton.propTypes = {
 
 export function TertiaryButton(props) {
   return (
-    <Button border="1px" borderColor="brand.cadetGrey" ml={6} onClick={props.clickFunction}>
+    <Button
+      border="1px"
+      borderColor="brand.cadetGrey"
+      width="12em"
+      mt={4}
+      onClick={props.clickFunction}
+    >
       {props.text}
     </Button>
   )
