@@ -58,8 +58,8 @@ export default function Account() {
 
   return (
     <Layout>
-      <Grid pt="12" m={0} templateColumns="repeat(4, 1fr)" gap={6}>
-        <GridItem colSpan={1}>
+      <Grid pt="12" m={0} templateColumns={{ sm: "repeat(1, 1fr)", lg: "repeat(4, 1fr)" }} gap={6}>
+        <GridItem colSpan={{ sm: 4, lg: 1 }}>
           <Stack bg="white" p={8} borderWidth="1px" borderRadius="lg" shadow="md">
             <Flex alignItems="center" my={2}>
               <Box w="12px" h="12px" bg="coral" m={2} />
