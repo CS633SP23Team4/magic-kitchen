@@ -4,26 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import "./index.css"
 import reportWebVitals from "./reportWebVitals"
-
 import Home from "./routes/home"
 import Tips from "./routes/tips"
-import Search from "./routes/search"
 import "@fontsource/aladin"
+import CreateRecipe from "./routes/createRecipe"
+import Search from "./routes/search"
 
-/*
---dark-moss-green: #354417ff;
---rust: #BD4823ff;
---prussian-blue: #0A2537ff;
---azure-web: #E8F3F2ff;
---ash-gray: #AEC2C6ff;
-
---azure-web: #E8F3F2ff;
---azure-web-2: #D7E7E5ff;
---ash-gray: #AEC2C6ff;
---cadet-gray: #8F9EA1ff;
---cadet-gray-2: #8EACBFff;
---prussian-blue: #031F32ff;
- */
 const colors = {
   brand: {
     prussianBlue: "#0A2537ff",
@@ -71,7 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/new-recipe",
-    element: <Home />,
+    element: <CreateRecipe />,
   },
   {
     path: "/tips",

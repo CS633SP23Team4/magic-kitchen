@@ -1,11 +1,21 @@
 import { initializeApp } from "firebase/app"
 import {
-  GoogleAuthProvider,
   getAuth,
+  GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
 } from "firebase/auth"
-import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore"
+import {
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAmx2m9NxMjIy5Iy94fwZdfKoT44P57t2o",
@@ -31,6 +41,39 @@ export const signInWithGoogle = async () => {
     console.error(err)
     throw new Error(err)
   }
+}
+
+export async function getUserRecipes(user) {
+  const recipeQuery = query(collection(db, "userRecipes"), where("UserId", "==", user))
+  const querySnapshot = await getDocs(recipeQuery)
+  const recipeArray = []
+  querySnapshot.forEach((doc) => {
+    const document = { ...doc.data(), id: doc.id }
+    recipeArray.push(document)
+  })
+  return recipeArray
+}
+
+export async function pushUserRecipe(userId, recipeData) {
+  try {
+    const docRef = await addDoc(collection(db, "userRecipes"), recipeData)
+    // const link = await addDoc(collection(db,'/users', userId,'MadeRecipe'),docRef.id)
+    console.log("Document written with ID: ", docRef.id)
+    return true // Indicate success
+  } catch (error) {
+    console.error("Error adding recipe: ", error)
+    return false // Indicate failure
+  }
+}
+
+export async function getUserFavorites(user) {
+  const querySnapshot = await getDocs(collection(db, "users", user, "LikedRecipes"))
+  const recipeArray = []
+  querySnapshot.forEach((doc) => {
+    const document = { ...doc.data(), id: doc.id }
+    recipeArray.push(document)
+  })
+  return recipeArray
 }
 
 export const RegisterLocal = async (email, password) => {
