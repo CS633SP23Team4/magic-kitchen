@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { pushUserRecipe } from "../../firebaseInit"
-import { FormWrapper } from "./FormWrapper"
-import CustomRecipe from "./RecipeForm"
 import { useLocation } from "react-router-dom"
 import { Text } from "@chakra-ui/react"
+import { FormWrapper } from "./FormWrapper"
+import CustomRecipe from "./RecipeForm"
 
 export function CreateNewRecipeForm() {
   const data = useLocation()
@@ -12,7 +12,6 @@ export function CreateNewRecipeForm() {
   const [messageColor, setMessageColor] = useState("green")
 
   const handleSubmit = async (formData) => {
-    console.log(formData)
     const requiredFields = ["name", "description", "timeEstimate", "ingredients", "steps"]
     const missingFields = requiredFields.filter(
       (field) => !formData[field] || formData[field].length === 0
@@ -23,22 +22,19 @@ export function CreateNewRecipeForm() {
       setMessage(`Missing required fields: ${missingFields.join(", ")}`)
       setMessageColor("red")
       return
-    } else {
+    }
+    const result = await pushUserRecipe(user, formData)
+    if (result) {
       setMessage("Success! Your recipe was submitted.")
       setMessageColor("green")
     }
-    // const result = await pushUserRecipe(user, formData)
-    // if (result) {
-    //   console.log(result)
-
-    // }
   }
 
   return (
     <FormWrapper>
       <Text color={messageColor}>{message}</Text>
       <form onSubmit={(e) => e.preventDefault()}>
-        <CustomRecipe submitFunction={handleSubmit} />
+        <CustomRecipe user={user} submitFunction={handleSubmit} />
       </form>
     </FormWrapper>
   )

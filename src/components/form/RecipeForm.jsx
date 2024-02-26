@@ -142,7 +142,8 @@ function StepsGroup(props) {
 }
 
 CustomRecipe.propTypes = {
-    submitFunction: PropTypes.func
+    submitFunction: PropTypes.func,
+    user: PropTypes.string
 }
 export default function CustomRecipe(props) {
     const [title, setTitle] = useState("")
@@ -207,6 +208,7 @@ export default function CustomRecipe(props) {
         props.submitFunction({
             name: title,
             description: description,
+            owner: props.user,
             intoleranceTags: [],
             timeEstimate: time,
             steps: steps,
