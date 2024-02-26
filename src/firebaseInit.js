@@ -1,7 +1,21 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth"
-import { doc, addDoc, setDoc, getDoc, collection, getDocs, getFirestore, query, where } from "firebase/firestore"
-
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth"
+import {
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAmx2m9NxMjIy5Iy94fwZdfKoT44P57t2o",
@@ -42,13 +56,13 @@ export async function getUserRecipes(user) {
 
 export async function pushUserRecipe(userId, recipeData) {
   try {
-    const docRef = await addDoc(collection(db, "userRecipes"), recipeData);
+    const docRef = await addDoc(collection(db, "userRecipes"), recipeData)
     // const link = await addDoc(collection(db,'/users', userId,'MadeRecipe'),docRef.id)
-    console.log("Document written with ID: ", docRef.id);
-    return true; // Indicate success
+    console.log("Document written with ID: ", docRef.id)
+    return true // Indicate success
   } catch (error) {
-    console.error("Error adding recipe: ", error);
-    return false; // Indicate failure
+    console.error("Error adding recipe: ", error)
+    return false // Indicate failure
   }
 }
 
@@ -60,6 +74,7 @@ export async function getUserFavorites(user) {
     recipeArray.push(document)
   })
   return recipeArray
+}
 
 export const RegisterLocal = async (email, password) => {
   try {
