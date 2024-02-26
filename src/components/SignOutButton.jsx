@@ -8,7 +8,5 @@ export function SignOutButton() {
     redirect("/")
     window.location.reload()
   }
-
-export function SignOutButton() {
   return <Button onClick={SignOut}>Sign out</Button>
 }
