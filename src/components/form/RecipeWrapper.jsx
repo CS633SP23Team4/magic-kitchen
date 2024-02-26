@@ -2,50 +2,43 @@ import { useEffect, useState } from "react"
 import { pushUserRecipe } from "../../firebaseInit"
 import { FormWrapper } from "./FormWrapper"
 import CustomRecipe from "./RecipeForm"
+import { useLocation } from "react-router-dom"
+import { Text } from "@chakra-ui/react"
 
 export function CreateNewRecipeForm() {
-  const getInitialFormData = () => ({
-    name: "",
-    description: "",
-    intoleranceTags: [],
-    timeEstimate: 0,
-    steps: [{ id: 1, instructions: "" }],
-    ingredients: [{ id: "0", item: "", amount: 0 }],
-    tips: "",
-    kitchenware: "",
-  })
-  const [formData, setFormData] = useState(getInitialFormData())
+  const data = useLocation()
+  const user = data.state.user
+  const [message, setMessage] = useState("")
+  const [messageColor, setMessageColor] = useState("green")
 
-  var loggedInUser = localStorage.getItem("user")
-
-  const handleSetFormData = async (items) => {
-    setFormData(items)
+  const handleSubmit = async (formData) => {
+    console.log(formData)
     const requiredFields = ["name", "description", "timeEstimate", "ingredients", "steps"]
     const missingFields = requiredFields.filter(
       (field) => !formData[field] || formData[field].length === 0
     )
 
     if (missingFields.length > 0) {
-      console.error(`Missing required fields: ${missingFields.join(", ")}`)
       // Display an error message to the user
+      setMessage(`Missing required fields: ${missingFields.join(", ")}`)
+      setMessageColor("red")
       return
+    } else {
+      setMessage("Success! Your recipe was submitted.")
+      setMessageColor("green")
     }
-    const result = handleSubmit()
-    if (result) console.log("success")
-  }
+    // const result = await pushUserRecipe(user, formData)
+    // if (result) {
+    //   console.log(result)
 
-  useEffect(() => {
-    setFormData(getInitialFormData())
-  }, [loggedInUser])
-  const handleSubmit = async () => {
-    const result = await pushUserRecipe("testUser", formData)
-    if (result) console.log("success")
+    // }
   }
 
   return (
     <FormWrapper>
-      <form onSubmit={handleSetFormData}>
-        <CustomRecipe setFormData={handleSetFormData} />
+      <Text color={messageColor}>{message}</Text>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <CustomRecipe submitFunction={handleSubmit} />
       </form>
     </FormWrapper>
   )

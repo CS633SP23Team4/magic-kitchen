@@ -20,10 +20,12 @@ import {DeleteButton, PrimaryButton, SecondaryButton} from "./CustomButton"
 IngredientGroup.propTypes = {
     id: PropTypes.string,
     deleteFunction: Function,
+    setIngredientsFunction: PropTypes.func
 }
 StepsGroup.propTypes = {
     id: PropTypes.string,
     deleteFunction: Function,
+    setStepsFunction: PropTypes.func
 }
 const MIN_INPUT_LENGTH = 3
 const options = []
@@ -83,17 +85,30 @@ const colourStyles: StylesConfig = {
 
 
 function IngredientGroup(props) {
+    const [id, setId] = useState(props.id)
     const [item, setItem] = useState("")
     const [amount, setAmount] = useState("")
 
+    useEffect(() => {
+        // Call the setIngredientsFunction passed from parent to update the ingredient
+        props.setIngredientsFunction({id: props.id, item: item, amount: amount})
+    }, [item, amount])
+
     return (
-        <InputGroup id={`${props.id}`} p={2}>
-            <AsyncSelect options={Ingredients} onChange={(e) => setItem(e)}
-                         cacheOptions
-                         noOptionsMessage={noOptionsMessage}
-                         loadOptions={promiseOptions}
-                         placeholder="Start typing an ingredient!"
-                         styles={colourStyles} value={item}/>
+        <InputGroup id={props.id} p={2}>
+            <AsyncSelect
+                options={Ingredients}
+                onChange={(selectedOption) => {
+                    setItem(selectedOption.label)
+                    setId(selectedOption.value)
+                }}
+                cacheOptions
+                noOptionsMessage={noOptionsMessage}
+                loadOptions={promiseOptions}
+                placeholder="Start typing an ingredient!"
+                styles={colourStyles}
+                value={{value: id, label: item}}
+            />
             <Input
                 bg="gray.50"
                 ml={2}
@@ -108,19 +123,26 @@ function IngredientGroup(props) {
 }
 
 function StepsGroup(props) {
+    const [instructions, setInstructions] = useState("")
+
+    useEffect(() => {
+        // Call the setIngredientsFunction passed from parent to update the ingredient
+        props.setStepsFunction({id: props.id, step: parseInt(props.id) + 1, instructions: instructions})
+    }, [instructions])
     return (
         <Flex id={`${props.id}`} pt={2}>
             <Text textAlign={"center"} p={2} color="gray.500" fontSize="1.2em">
                 Step {parseInt(props.id) + 1}
             </Text>
-            <Textarea bg="gray.50" height={48} placeholder="Add step instructions"></Textarea>
+            <Textarea bg="gray.50" height={48} placeholder="Add step instructions"
+                      onChange={(e) => setInstructions(e.target.value)}/>
             <DeleteButton deleteFunction={props.deleteFunction}/>
         </Flex>
     )
 }
 
 CustomRecipe.propTypes = {
-    setFormData: PropTypes.func
+    submitFunction: PropTypes.func
 }
 export default function CustomRecipe(props) {
     const [title, setTitle] = useState("")
@@ -146,8 +168,20 @@ export default function CustomRecipe(props) {
         })
     }
 
+    const setIngredientsFunction = (updatedIngredient) => {
+        setIngredients((prevIngredients) => {
+            return prevIngredients.map((prevIngredient) => {
+                if (prevIngredient.id === updatedIngredient.id) {
+                    return updatedIngredient
+                } else {
+                    return prevIngredient
+                }
+            })
+        })
+    }
+
     const moreSteps = () => {
-        setSteps(steps.concat([{id: `${steps.length}`, instructions: ""}]))
+        setSteps(steps.concat([{id: `${steps.length}`, step: `${steps.length + 1}`, instructions: ""}]))
     }
 
     const fewerSteps = (i) => {
@@ -156,22 +190,32 @@ export default function CustomRecipe(props) {
         })
     }
 
-    const handleClick = () => {
-        if (props.setFormData) {
-            props.setFormData({
-                name: title,
-                description: description,
-                intoleranceTags: [],
-                timeEstimate: time,
-                steps: steps,
-                ingredients: ingredients,
-                tips: tips,
-                kitchenware: kitchenware,
-            });
-        } else {
-            console.log("setFormData is not defined"); // Check if setFormData is undefined
-        }
-    };
+    const setStepsFunction = (updatedStep) => {
+
+        setSteps((prevSteps) => {
+            return prevSteps.map((prevStep) => {
+                if (prevStep.id === updatedStep.id) {
+                    return updatedStep
+                } else {
+                    return prevStep
+                }
+            })
+        })
+    }
+
+    const submitForm = () => {
+        props.submitFunction({
+            name: title,
+            description: description,
+            intoleranceTags: [],
+            timeEstimate: time,
+            steps: steps,
+            ingredients: ingredients,
+            tips: tips,
+            kitchenware: kitchenware,
+        })
+    }
+
 
     return (
         <>
@@ -202,6 +246,7 @@ export default function CustomRecipe(props) {
                         id={ingredient.id}
                         key={ingredient.id}
                         deleteFunction={() => fewerIngredients(ingredient.id)}
+                        setIngredientsFunction={setIngredientsFunction}
                     />
                 ))}
             </FormControl>
@@ -214,7 +259,8 @@ export default function CustomRecipe(props) {
                 </Flex>
                 <Stack>
                     {steps.map((step) => (
-                        <StepsGroup id={step.id} key={step.id} deleteFunction={() => fewerSteps(step.id)}/>
+                        <StepsGroup id={step.id} key={step.id} setStepsFunction={setStepsFunction}
+                                    deleteFunction={() => fewerSteps(step.id)}/>
                     ))}
                 </Stack>
             </FormControl>
@@ -241,7 +287,7 @@ export default function CustomRecipe(props) {
                 mt={4}
                 type="submit"
                 text="Submit"
-                clickFunction={handleClick}
+                clickFunction={submitForm}
             />
         </>
     )
