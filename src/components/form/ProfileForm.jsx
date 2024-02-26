@@ -8,14 +8,13 @@ import {
     InputGroup,
     Textarea,
     Flex,
-    AvatarBadge,
     Text
 } from "@chakra-ui/react"
 import {NotAllowedIcon} from "@chakra-ui/icons";
 import Select, {components, OptionProps} from "react-select"
 import {DietOption, DietOptions} from "../../data/diet.ts"
 import {pushUserData} from "../../firebaseInit";
-import {EditButton, PrimaryButton, TertiaryButton} from "./CustomButton";
+import {PrimaryButton, TertiaryButton} from "./CustomButton";
 
 
 const Option = (props: OptionProps<DietOption>) => {
@@ -35,35 +34,43 @@ const Option = (props: OptionProps<DietOption>) => {
     );
 };
 
-const updateUserData = async (user, data) => {
-    const response = await pushUserData(user, data)
-    return response
-}
 
 ProfileForm.propTypes = {
     user: PropTypes.string,
-    userData: PropTypes.any
 }
+
 
 export default function ProfileForm(props) {
     const [nameFirst, setNameFirst] = useState("")
     const [nameLast, setNameLast] = useState("")
-    const [email, setEmail] = useState("")
     const [bio, setBio] = useState("")
     const [editable, setEditable] = useState(false)
     const [message, setMessage] = useState("")
     const [messageColor, setMessageColor] = useState("green")
+    const [currentUserData, setCurrentUserData] = useState({})
 
+    // Load data from localStorage when the component mounts
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("userData"));
+        // Check if data exists before updating state
+        if (data) {
+            setCurrentUserData(data);
+        }
+    }, []);
+
+    useEffect(() => {
+        setNameFirst(currentUserData.nameFirst)
+        setNameLast(currentUserData.nameLast)
+        setBio(currentUserData.bio)
+    }, [currentUserData])
 
     const editProfile = () => {
         setEditable(true)
     }
-    useEffect(() => {
-        setEmail(props.userData.email)
-        setNameFirst(props.userData.nameFirst)
-        setNameLast(props.userData.nameLast)
-        setBio(props.userData.bio)
-    }, [props.user, props.userData])
+    const updateUserData = async (user, data) => {
+        await pushUserData(user, data)
+        localStorage.setItem("userData", JSON.stringify(data))
+    }
 
     const handleSubmit = async () => {
         const userData = {
@@ -90,7 +97,6 @@ export default function ProfileForm(props) {
                 <FormLabel fontSize={24}>Avatar</FormLabel>
                 <Flex justify="center">
                     <Avatar size="2xl" name={nameFirst} src="https://bit.ly/tioluwani-kolawole">{" "}
-                        
                     </Avatar>
                 </Flex>
             </FormControl>

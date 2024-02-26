@@ -127,5 +127,10 @@ export const pushUserData = async (user, data) => {
     }
   })
   const userRef = doc(db, "users", user)
-  await setDoc(userRef, data, { merge: true })
+  try {
+    await setDoc(userRef, data, { merge: true })
+    console.log("yay")
+  } catch (e) {
+    console.error(e)
+  }
 }
